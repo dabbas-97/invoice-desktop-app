@@ -1,0 +1,14 @@
+.MuiTab-root {
+  margin: auto !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #555;
+}
+.MuiTab-wrapper {
+  letter-spacing: normal;
+}
+.navbar {
+  background: #f3f3f3;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+}

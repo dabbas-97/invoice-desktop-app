@@ -1,0 +1,154 @@
+.invoice-box {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  color: #555;
+  background: white;
+  position: relative;
+}
+
+.invoice-box table {
+  width: 100%;
+  line-height: inherit;
+  text-align: left;
+}
+
+.invoice-box table td {
+  padding: 5px;
+  vertical-align: top;
+}
+
+.invoice-box table tbody span.td:nth-child(2) {
+  text-align: right;
+}
+
+.invoice-box table tbody.top table td {
+  padding-bottom: 20px;
+}
+
+.invoice-box table tbody.top table td.title {
+  font-size: 45px;
+  line-height: 45px;
+  color: #333;
+}
+
+.invoice-box table tbody.information table td {
+  padding-bottom: 40px;
+}
+
+.invoice-box table tbody.heading td {
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.invoice-box table tbody.details td {
+  padding-bottom: 20px;
+}
+
+.invoice-box table tbody.item td {
+  border-bottom: 1px solid #eee;
+}
+
+.invoice-box table tbody.item.last td {
+  border-bottom: none;
+}
+
+.invoice-box table tbody.total td:nth-child(2) {
+  border-top: 2px solid #eee;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+  .invoice-box table tbody.top table td {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+
+  .invoice-box table tbody.information table td {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+}
+
+/** RTL **/
+.rtl {
+  direction: rtl;
+  font-family: Tahoma, "Helvetica Neue", "Helvetica", Helvetica, Arial,
+    sans-serif;
+}
+
+.rtl table {
+  text-align: right;
+}
+
+.rtl table tbody td:nth-child(2) {
+  text-align: left;
+}
+.logo {
+  max-width: 160px;
+}
+
+.details td:first-child {
+  width: 40%;
+}
+
+.back_icon {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  font-size: 1.3em;
+  border-radius: 50%;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.MuiIconButton-root:hover {
+  color: black;
+}
+
+.print-btn {
+  text-align: center;
+}
+.print-btn button {
+  margin: 30px;
+  color: #555555;
+  border: 1px solid rgb(0 0 0 / 50%);
+  background: #eeeeee;
+  text-align: center;
+}
+.print-btn .print-icon {
+  margin: 0px 10px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .back_icon {
+    display: none;
+  }
+  #section-to-print,
+  #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .invoice-box {
+    box-shadow: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}
