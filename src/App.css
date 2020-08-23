@@ -1,5 +1,6 @@
-* {
-  font-family: "Cairo", sans-serif;
+*,
+label {
+  font-family: "Cairo", sans-serif !important;
 }
 
 body {

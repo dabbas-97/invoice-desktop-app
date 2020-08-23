@@ -1,0 +1,31 @@
+.add_invoice {
+  padding: 10px 30px;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  margin: 10px 0;
+}
+.add_invoice h3::before {
+  content: "";
+  border-right: #7e7e92 solid 4px;
+  margin-left: 14px;
+}
+.add_invoice h3 {
+  color: #3f51c3;
+  margin-bottom: 30px;
+}
+.add_invoice_form {
+  margin: 10px 0;
+}
+.MuiFormControl-root {
+  width: 100%;
+}
+.MuiOutlinedInput-inputMarginDense {
+  padding-top: 15.5px !important;
+  padding-bottom: 15.5px !important;
+}
+.MuiFormControl-marginNormal {
+  margin-top: 0px !important;
+}
+.MuiFormLabel-root.Mui-focused {
+  color: #7e7e92 !important;
+}
