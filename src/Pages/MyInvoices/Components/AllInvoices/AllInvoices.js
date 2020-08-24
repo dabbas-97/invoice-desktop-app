@@ -1,21 +1,37 @@
 import React, { useState } from "react";
 import "./AllInvoices.css";
-import InvoiceTemplate from "../Templates/InvoiceTemplate";
+import InvoiceTemplate from "../Templates/InvoiceTemplate/InvoiceTemplate";
 import { Grid, Modal, Fade } from "@material-ui/core/";
 import { FaFileInvoice } from "react-icons/fa";
 import { BiReceipt } from "react-icons/bi";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
+import { BsBuilding } from "react-icons/bs";
+import ReceiptTemplate from "../Templates/ReceiptTemplate/ReceiptTemplate";
 
 const AllInvoices = ({ invoices }) => {
-  //*showing invoice details
-  const [showInvoice, setShowInvoice] = useState(false);
+  //*showing invoice or receipt details
+  const [pageType, setPageType] = useState(0);
   const [invoice, setInvoice] = useState({});
 
   const getInvoice = (id) => {
+    //TODO: fetch invoice data from database
     setInvoice({
       number: 1334,
       dateCreated: "12/05/2020",
-      secondParty: "شركة زين",
+      name: "شركة زين",
+      agreementDescription: "عقد من شرطك يبسو سيبب بقيمةو ببي",
+      amountWords: "الف دينار لا غير",
+      amountNumbers: 1000,
+    });
+    setPageType(1);
+  };
+
+  const getReceipt = (id) => {
+    //TODO: fetch receipt data from database
+    setInvoice({
+      number: 1334,
+      dateCreated: "12/05/2020",
+      name: "شركة زين",
       agreementDescription: "عقد من شرطك يبسو سيبب بقيمةو ببي",
       payments: [
         {
@@ -28,23 +44,34 @@ const AllInvoices = ({ invoices }) => {
         },
       ],
     });
-    setShowInvoice(true);
+    setPageType(2);
   };
-  const closeInvoice = () => {
-    setShowInvoice(false);
+  const backToInvoices = () => {
+    setPageType(0);
   };
 
   //* showing contract details
-  const [details, setDetails] = useState("");
-  const [showDetails, setShowDetails] = useState(false);
+  const [contractDetails, setContractDetails] = useState("");
+  const [showContract, setShowContract] = useState(false);
 
-  const handleOpen = (id) => {
-    setDetails("tamer hosny in the house");
-    setShowDetails(true);
+  const getContractDetails = (id) => {
+    //TODO: fetch contract details from database
+    setContractDetails("tamer hosny in the house");
+    setShowContract(true);
+  };
+  //* showing company info
+  const [companyInfo, setCompanyInfo] = useState({ name: "coco" });
+  const [showCompanyInfo, setShowCompanyInfo] = useState(false);
+
+  const getCompanyInfo = (id) => {
+    //TODO: fetch contract details from database
+    setCompanyInfo({ ...companyInfo, name: "tamer hosny in the house" });
+    setShowCompanyInfo(true);
   };
 
   const handleClose = () => {
-    setShowDetails(false);
+    setShowContract(false);
+    setShowCompanyInfo(false);
   };
 
   const fetchInvoices = () => {
@@ -53,17 +80,25 @@ const AllInvoices = ({ invoices }) => {
         <Grid item xs={2}>
           {invoice.name}
         </Grid>
+        <Grid
+          item
+          xs={1}
+          className="invoice_icon"
+          onClick={() => getCompanyInfo(invoice.id)}
+        >
+          <BsBuilding />
+        </Grid>
         <Grid item xs={1}>
           {invoice.date}
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           {invoice.number}
         </Grid>
         <Grid
           item
           xs={1}
           className="invoice_icon"
-          onClick={() => handleOpen(invoice.id)}
+          onClick={() => getContractDetails(invoice.id)}
         >
           <BiReceipt />
         </Grid>
@@ -81,7 +116,12 @@ const AllInvoices = ({ invoices }) => {
         >
           <FaFileInvoice />
         </Grid>
-        <Grid item xs={1} className="invoice_icon">
+        <Grid
+          item
+          xs={1}
+          className="invoice_icon"
+          onClick={() => getReceipt(invoice.id)}
+        >
           <FaFileInvoice />
         </Grid>
         <Grid item xs={1} className="edit_icon">
@@ -94,31 +134,71 @@ const AllInvoices = ({ invoices }) => {
     ));
   };
 
+  const renderPages = () => {
+    switch (pageType) {
+      default:
+        return (
+          <Fade in={true} timeout={500}>
+            <div className="invoices_container">
+              <AllInvoicesTitle />
+              {fetchInvoices()}
+            </div>
+          </Fade>
+        );
+      case 1:
+        return (
+          <InvoiceTemplate invoice={invoice} backToInvoices={backToInvoices} />
+        );
+      case 2:
+        return (
+          <ReceiptTemplate receipt={invoice} backToInvoices={backToInvoices} />
+        );
+    }
+  };
+
   return (
     <div>
-      {showInvoice ? (
-        <InvoiceTemplate invoice={invoice} closeInvoice={closeInvoice} />
-      ) : (
-        <Fade in={true} timeout={500}>
-          <div className="invoices_container">
-            <AllInvoicesTitle />
-            {fetchInvoices()}
-          </div>
-        </Fade>
-      )}
-      <Modal open={showDetails} onClose={handleClose} closeAfterTransition>
-        <Fade in={showDetails} timeout={500}>
-          <div className="details_modal">
-            <h3>البيـــان</h3>
-            {details}
-          </div>
-        </Fade>
-      </Modal>
+      {renderPages()}
+      <ContractModal
+        showContract={showContract}
+        handleClose={handleClose}
+        contractDetails={contractDetails}
+      />
+      <CompanyInfoModal
+        showCompanyInfo={showCompanyInfo}
+        handleClose={handleClose}
+        companyInfo={companyInfo}
+      />
     </div>
   );
 };
 
 export default AllInvoices;
+
+const ContractModal = ({ showContract, handleClose, contractDetails }) => {
+  return (
+    <Modal open={showContract} onClose={handleClose} closeAfterTransition>
+      <Fade in={showContract} timeout={500}>
+        <div className="details_modal">
+          <h3>البيـــان</h3>
+          {contractDetails}
+        </div>
+      </Fade>
+    </Modal>
+  );
+};
+const CompanyInfoModal = ({ showCompanyInfo, handleClose, companyInfo }) => {
+  return (
+    <Modal open={showCompanyInfo} onClose={handleClose} closeAfterTransition>
+      <Fade in={showCompanyInfo} timeout={500}>
+        <div className="details_modal">
+          <h3>البيـــان</h3>
+          {companyInfo.name}
+        </div>
+      </Fade>
+    </Modal>
+  );
+};
 
 const AllInvoicesTitle = () => {
   return (
@@ -127,16 +207,19 @@ const AllInvoicesTitle = () => {
         اسم الشركة
       </Grid>
       <Grid item xs={1}>
+        بيانات الشركة
+      </Grid>
+      <Grid item xs={1}>
         التاريخ
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={1}>
         رقم الفاتورة
       </Grid>
       <Grid item xs={1}>
         البيــان
       </Grid>
       <Grid item xs={1}>
-        العقد
+        نوع العقد
       </Grid>
       <Grid item xs={1}>
         القيمة

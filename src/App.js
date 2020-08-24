@@ -20,13 +20,13 @@ const App = () => {
   const renderPages = () => {
     switch (tab) {
       case 0:
-        return <Home />;
+        return <Home setTab={setTab} />;
       case 1:
-        return <MyInvoices />;
+        return <MyInvoices setTab={setTab} />;
       case 2:
-        return <AddInvoice />;
+        return <AddInvoice setTab={setTab} />;
       default:
-        return <Home />;
+        return <Home setTab={setTab} />;
     }
   };
   // End of Tabs

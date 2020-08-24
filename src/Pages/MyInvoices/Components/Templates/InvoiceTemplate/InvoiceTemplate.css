@@ -1,0 +1,135 @@
+.invoice-box {
+  max-width: 600px;
+  min-height: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  color: #555;
+  background: white;
+  position: relative;
+}
+.invoice-box h3 {
+  text-align: center;
+  letter-spacing: 0;
+  font-size: 2em;
+  border-bottom: solid #55555594 1px;
+  width: 201px;
+  margin: 20px auto 70px auto;
+  padding: 20px;
+}
+
+.logo {
+  max-width: 160px;
+}
+
+.back_icon {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  font-size: 1.3em;
+  border-radius: 50%;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.MuiIconButton-root:hover {
+  color: black;
+}
+
+.print-btn {
+  text-align: center;
+  display: block !important;
+  margin: auto !important;
+}
+.print-btn {
+  margin: 30px;
+  color: #555555;
+  border: 1px solid rgb(0 0 0 / 50%);
+  background: #eeeeee;
+  text-align: center;
+}
+.print-btn:hover {
+  color: #3f51b5;
+  background: white;
+}
+.print-btn .print-icon {
+  margin: 0px 10px;
+}
+
+.small-info {
+  font-size: 14px;
+  padding-top: 45px !important;
+}
+
+.invoice-info {
+  position: absolute;
+  top: 250px;
+  left: -30px;
+  font-size: 13px;
+}
+
+.big-info {
+  padding: 10px 0;
+  margin-top: 20px;
+  border-bottom: solid #00000040 1px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.total-amount {
+  font-weight: bold;
+  border: solid #00000040 1px;
+  padding: 0px 10px;
+  border-radius: 3px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.total-section {
+  margin: 20px 0 !important;
+  font-size: 1.2em;
+}
+.total-section div {
+  padding: 5px 5px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .back_icon,
+  .print-btn {
+    display: none !important;
+  }
+  #section-to-print,
+  #section-to-print * {
+    visibility: visible !important;
+  }
+
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .invoice-box {
+    box-shadow: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    max-width: 1000px;
+  }
+  .invoice-box h3 {
+    margin-bottom: 150px;
+  }
+  .total-section {
+    margin: 100px 0 !important;
+  }
+}

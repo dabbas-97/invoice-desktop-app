@@ -3,6 +3,7 @@
   border: #00000052 solid 1px;
   border-radius: 3px;
   margin: 10px 0;
+  background: #f3f3f3;
 }
 .add_invoice h3::before {
   content: "";
@@ -25,7 +26,39 @@
 }
 .MuiFormControl-marginNormal {
   margin-top: 0px !important;
+  color: #3f51c3;
 }
 .MuiFormLabel-root.Mui-focused {
   color: #7e7e92 !important;
+}
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 2px solid rgb(63 81 195) !important;
+}
+.add_invoice hr {
+  margin: 60px 300px;
+  border: none;
+  min-height: 1px;
+  background: #a5a5a5;
+}
+
+.add_invoice .btn {
+  margin: auto;
+  display: block;
+  width: 100%;
+  font-size: 1.7em;
+  letter-spacing: normal;
+
+  transition: all 0.3s ease;
+}
+.cancel-btn:hover {
+  border-color: red !important;
+  color: red !important;
+}
+.cancel-btn {
+  border-color: #822c2c !important;
+  color: #822c2c !important;
+}
+.radio-buttons {
+  justify-content: center;
+  align-content: center;
 }
