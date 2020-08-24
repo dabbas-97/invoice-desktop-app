@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddInvoice.css";
 import { Fade } from "@material-ui/core";
 import "date-fns";
@@ -18,13 +18,17 @@ const AddInvoice = ({ setTab }) => {
     duration: "",
     payment: "cash",
     date: new Date(),
+    cheque: {
+      number: "",
+      bank: "",
+      branch: "",
+      date: new Date(),
+    },
   });
-  const [chequeData, setChequeData] = useState({
-    number: "",
-    bank: "",
-    branch: "",
-    date: new Date(),
-  });
+
+  useEffect(() => {
+    console.log(invoiceData);
+  }, [invoiceData]);
 
   const handleInvoice = (value) => (e) => {
     if (value === "date") {
@@ -35,9 +39,15 @@ const AddInvoice = ({ setTab }) => {
   };
   const handleCheque = (value) => (e) => {
     if (value === "date") {
-      setChequeData({ ...chequeData, date: e });
+      setInvoiceData({
+        ...invoiceData,
+        cheque: { ...invoiceData.cheque, date: e },
+      });
     } else {
-      setChequeData({ ...chequeData, [value]: e.target.value });
+      setInvoiceData({
+        ...invoiceData,
+        cheque: { ...invoiceData.cheque, [value]: e.target.value },
+      });
     }
   };
 
@@ -54,7 +64,7 @@ const AddInvoice = ({ setTab }) => {
           setTab={setTab}
           invoice={invoiceData}
           handleCheque={handleCheque}
-          cheque={chequeData}
+          cheque={invoiceData.cheque}
           submitData={submitData}
         />
       </div>
