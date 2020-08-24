@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./AllInvoices.css";
 import InvoiceTemplate from "../Templates/InvoiceTemplate/InvoiceTemplate";
-import { Grid, Modal, Fade } from "@material-ui/core/";
+import { Grid, Fade } from "@material-ui/core/";
 import { FaFileInvoice } from "react-icons/fa";
 import { BiReceipt } from "react-icons/bi";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
 import ReceiptTemplate from "../Templates/ReceiptTemplate/ReceiptTemplate";
+import { CompanyInfoModal } from "../CompanyInfoModal/CompanyInfoModal";
+import { ContractModal } from "../ContractModal/ContractModal";
 
 const AllInvoices = ({ invoices }) => {
   //*showing invoice or receipt details
@@ -65,7 +67,13 @@ const AllInvoices = ({ invoices }) => {
 
   const getCompanyInfo = (id) => {
     //TODO: fetch contract details from database
-    setCompanyInfo({ ...companyInfo, name: "tamer hosny in the house" });
+    setCompanyInfo({
+      name: "شركة زين",
+      location: "الدوار الثامن",
+      manager: "مي المؤقت",
+      email: "maimpss@zain.com",
+      phone: "0794234234",
+    });
     setShowCompanyInfo(true);
   };
 
@@ -174,31 +182,6 @@ const AllInvoices = ({ invoices }) => {
 };
 
 export default AllInvoices;
-
-const ContractModal = ({ showContract, handleClose, contractDetails }) => {
-  return (
-    <Modal open={showContract} onClose={handleClose} closeAfterTransition>
-      <Fade in={showContract} timeout={500}>
-        <div className="details_modal">
-          <h3>البيـــان</h3>
-          {contractDetails}
-        </div>
-      </Fade>
-    </Modal>
-  );
-};
-const CompanyInfoModal = ({ showCompanyInfo, handleClose, companyInfo }) => {
-  return (
-    <Modal open={showCompanyInfo} onClose={handleClose} closeAfterTransition>
-      <Fade in={showCompanyInfo} timeout={500}>
-        <div className="details_modal">
-          <h3>البيـــان</h3>
-          {companyInfo.name}
-        </div>
-      </Fade>
-    </Modal>
-  );
-};
 
 const AllInvoicesTitle = () => {
   return (
