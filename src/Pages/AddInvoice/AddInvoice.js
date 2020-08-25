@@ -1,72 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./AddInvoice.css";
 import { Fade } from "@material-ui/core";
 import "date-fns";
-import { InvoiceForm } from "./Components/InvoiceForm";
+import { InvoiceForm } from "../forms/InvoiceForm/InvoiceForm";
+import { InvoiceDialog } from "../forms/InvoiceDialog/InvoiceDialog";
 
-const AddInvoice = ({ setTab }) => {
-  const [invoiceData, setInvoiceData] = useState({
-    number: 1123,
-    name: "",
-    location: "",
-    manager: "",
-    phone: "",
-    email: "",
-    contract: "",
-    amountWords: "",
-    amountNumbers: 0,
-    duration: "",
-    payment: "cash",
-    date: new Date(),
-    cheque: {
-      number: "",
-      bank: "",
-      branch: "",
-      date: new Date(),
-    },
-  });
-
+const AddInvoice = ({
+  handleInvoice,
+  invoiceData,
+  handleCheque,
+  clearInvoiceData,
+  dialog,
+  setDialog,
+}) => {
+  const proceed = () => {
+    setDialog({
+      action: "حفظ",
+      title: `إضافة فاتورة جديدة `,
+      message: "سيتم إضافة الفاتورة ، إتمام العملية؟",
+      openDialog: true,
+      confirm() {
+        //Todo delete the invoice with the id (dialog.id)
+        invoiceData.confirm();
+        setDialog({ openDialog: false });
+      },
+      cancel() {
+        console.log("cancel deletion");
+        setDialog({ openDialog: false });
+      },
+    });
+  };
   useEffect(() => {
-    console.log(invoiceData);
-  }, [invoiceData]);
-
-  const handleInvoice = (value) => (e) => {
-    if (value === "date") {
-      setInvoiceData({ ...invoiceData, date: e });
-    } else {
-      setInvoiceData({ ...invoiceData, [value]: e.target.value });
-    }
-  };
-  const handleCheque = (value) => (e) => {
-    if (value === "date") {
-      setInvoiceData({
-        ...invoiceData,
-        cheque: { ...invoiceData.cheque, date: e },
-      });
-    } else {
-      setInvoiceData({
-        ...invoiceData,
-        cheque: { ...invoiceData.cheque, [value]: e.target.value },
-      });
-    }
-  };
-
-  const submitData = () => {
-    console.log("submited!!");
-    setTab(1);
-  };
-
+    clearInvoiceData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Fade in={true} timeout={500}>
       <div className="add_invoice">
         <InvoiceForm
           handleInvoice={handleInvoice}
-          setTab={setTab}
           invoice={invoiceData}
           handleCheque={handleCheque}
-          cheque={invoiceData.cheque}
-          submitData={submitData}
+          proceed={proceed}
         />
+        <InvoiceDialog dialogData={dialog} />
       </div>
     </Fade>
   );

@@ -1,0 +1,16 @@
+.home {
+  padding: 10px 30px;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  margin: 10px 0;
+  background: #f3f3f3;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+.home h3 {
+  font-size: 2em;
+  color: #484848;
+}
+.home p {
+  direction: ltr;
+}

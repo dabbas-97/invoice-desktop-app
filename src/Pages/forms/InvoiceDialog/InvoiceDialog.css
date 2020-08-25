@@ -1,0 +1,8 @@
+.main-dialog {
+  text-align: center;
+  height: 200px;
+  width: 500px;
+}
+.main-dialog button {
+  margin: auto;
+}

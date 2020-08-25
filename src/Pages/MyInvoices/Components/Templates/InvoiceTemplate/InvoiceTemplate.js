@@ -88,10 +88,10 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
         </Grid>
         <Grid container className="invoice-amount">
           <Grid item xs={8}></Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} className="invoice-total">
             <div>القيمة الأجمالية (دينار):</div>
           </Grid>
-          <Grid item xs={1} className="bold">
+          <Grid item xs={1} className="bold invoice-total">
             <div>{invoice.amountNumbers * 0.16 + invoice.amountNumbers}</div>
           </Grid>
         </Grid>

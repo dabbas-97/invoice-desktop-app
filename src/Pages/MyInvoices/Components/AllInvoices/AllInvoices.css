@@ -35,6 +35,14 @@
   background: darkgrey;
 }
 
+.empty-section {
+  padding: 30px;
+  border-radius: 3px;
+  background: #f3f3f3;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .delete_icon {
   color: #c53f3f;
 }

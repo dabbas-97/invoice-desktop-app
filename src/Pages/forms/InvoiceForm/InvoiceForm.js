@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Fade,
   TextField,
@@ -19,11 +19,12 @@ import { BsReverseBackspaceReverse } from "react-icons/bs";
 export const InvoiceForm = ({
   handleInvoice,
   handleCheque,
-  setTab,
   invoice,
-  cheque,
-  submitData,
+  proceed,
 }) => {
+  useEffect(() => {
+    console.log(invoice);
+  }, [invoice]);
   return (
     <form autoComplete="off" className="add_invoice_form">
       <h3> بيانات الشركة</h3>
@@ -34,6 +35,7 @@ export const InvoiceForm = ({
             label="أسم الشركة"
             variant="outlined"
             size="small"
+            value={invoice.name}
           />
         </Grid>
         <Grid container item xs={6}>
@@ -42,6 +44,7 @@ export const InvoiceForm = ({
             label="العنوان "
             variant="outlined"
             size="small"
+            value={invoice.location}
           />
         </Grid>
       </Grid>
@@ -52,6 +55,7 @@ export const InvoiceForm = ({
             label="مدير الشركة / الشخص المعني"
             variant="outlined"
             size="small"
+            value={invoice.manager}
           />
         </Grid>
         <Grid container item xs={4}>
@@ -60,6 +64,7 @@ export const InvoiceForm = ({
             label="هاتف"
             variant="outlined"
             size="small"
+            value={invoice.phone}
           />
         </Grid>
         <Grid container item xs={4}>
@@ -68,6 +73,7 @@ export const InvoiceForm = ({
             label="البريد الالكتروني"
             variant="outlined"
             size="small"
+            value={invoice.email}
           />
         </Grid>
       </Grid>
@@ -80,6 +86,7 @@ export const InvoiceForm = ({
             label="البيان"
             variant="outlined"
             size="small"
+            value={invoice.contract}
           />
         </Grid>
         <Grid item xs={2}>
@@ -115,6 +122,7 @@ export const InvoiceForm = ({
             label="القيمة"
             variant="outlined"
             size="small"
+            value={invoice.amountWords}
           />
         </Grid>
         <Grid item xs={3}>
@@ -123,6 +131,7 @@ export const InvoiceForm = ({
             label=" القيمة بالارقام"
             variant="outlined"
             size="small"
+            value={invoice.amountNumbers}
           />
         </Grid>
 
@@ -132,6 +141,7 @@ export const InvoiceForm = ({
             label="نوع العقد"
             variant="outlined"
             size="small"
+            value={invoice.duration}
           />
         </Grid>
         <Grid item xs={3}>
@@ -165,6 +175,7 @@ export const InvoiceForm = ({
                 label="رقم الشيك"
                 variant="outlined"
                 size="small"
+                value={invoice.cheque.number}
               />
             </Grid>
             <Grid item xs={3}>
@@ -173,6 +184,7 @@ export const InvoiceForm = ({
                 label="البنك"
                 variant="outlined"
                 size="small"
+                value={invoice.cheque.bank}
               />
             </Grid>
             <Grid item xs={3}>
@@ -181,6 +193,7 @@ export const InvoiceForm = ({
                 label="فرع"
                 variant="outlined"
                 size="small"
+                value={invoice.cheque.branch}
               />
             </Grid>
             <Grid item xs={3} className="date_picker">
@@ -191,7 +204,7 @@ export const InvoiceForm = ({
                   format="MM/dd/yyyy"
                   margin="normal"
                   label="التاريخ"
-                  value={cheque.date}
+                  value={invoice.cheque.date}
                   onChange={handleCheque("date")}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
@@ -209,7 +222,7 @@ export const InvoiceForm = ({
             variant="outlined"
             size="medium"
             color="primary"
-            onClick={() => setTab(1)}
+            onClick={() => invoice.cancel()}
             className="cancel-btn btn"
           >
             <span className="btn-icon">
@@ -222,7 +235,7 @@ export const InvoiceForm = ({
             variant="outlined"
             size="medium"
             color="primary"
-            onClick={() => submitData()}
+            onClick={() => proceed()}
             className=" btn"
           >
             <span className="btn-icon">

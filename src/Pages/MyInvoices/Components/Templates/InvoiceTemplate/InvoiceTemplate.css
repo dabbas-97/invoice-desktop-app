@@ -1,6 +1,7 @@
 .invoice-box {
   max-width: 700px;
   min-height: 800px;
+  height: 900px;
   margin: 30px auto;
   padding: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -92,6 +93,10 @@
 .invoice-amount {
   margin: 20px 0;
 }
+.invoice-total {
+  border-top: solid 1px #00000057;
+  padding-top: 10px;
+}
 
 .signature {
   margin-top: 80px !important;
@@ -115,6 +120,7 @@
   text-align: center;
   display: block !important;
   margin: auto !important;
+  top: 50px;
 }
 .print-btn {
   margin: 30px;

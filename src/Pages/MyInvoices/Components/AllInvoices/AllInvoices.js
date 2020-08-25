@@ -9,8 +9,9 @@ import { BsBuilding } from "react-icons/bs";
 import ReceiptTemplate from "../Templates/ReceiptTemplate/ReceiptTemplate";
 import { CompanyInfoModal } from "../CompanyInfoModal/CompanyInfoModal";
 import { ContractModal } from "../ContractModal/ContractModal";
+import { InvoiceDialog } from "../../../forms/InvoiceDialog/InvoiceDialog";
 
-const AllInvoices = ({ invoices }) => {
+const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
   //*showing invoice or receipt details
   const [pageType, setPageType] = useState(0);
   const [invoice, setInvoice] = useState({});
@@ -82,6 +83,24 @@ const AllInvoices = ({ invoices }) => {
     setShowCompanyInfo(false);
   };
 
+  const deleteInvoice = (id) => {
+    setDialog({
+      action: "حذف",
+      title: `حذف الفاتورة رقم ${id}`,
+      message: "سيتم حذف الفاتورة ، هل انت متأكد؟",
+      openDialog: true,
+      confirm() {
+        //Todo delete the invoice with the id (dialog.id)
+        console.log("invoice deleted!!!");
+        setDialog({ openDialog: false });
+      },
+      cancel() {
+        console.log("cancel deletion");
+        setDialog({ openDialog: false });
+      },
+    });
+  };
+
   const fetchInvoices = () => {
     return invoices.map((invoice) => (
       <Grid container className="invoices_data" key={invoice.id}>
@@ -132,10 +151,20 @@ const AllInvoices = ({ invoices }) => {
         >
           <FaFileInvoice />
         </Grid>
-        <Grid item xs={1} className="edit_icon">
+        <Grid
+          item
+          xs={1}
+          className="edit_icon"
+          onClick={() => editInvoice(invoice.id)}
+        >
           <AiFillEdit />
         </Grid>
-        <Grid item xs={1} className="delete_icon">
+        <Grid
+          item
+          xs={1}
+          className="delete_icon"
+          onClick={() => deleteInvoice(invoice.id)}
+        >
           <AiOutlineDelete />
         </Grid>
       </Grid>
@@ -149,7 +178,11 @@ const AllInvoices = ({ invoices }) => {
           <Fade in={true} timeout={500}>
             <div className="invoices_container">
               <AllInvoicesTitle />
-              {fetchInvoices()}
+              {invoices ? (
+                fetchInvoices()
+              ) : (
+                <div className="empty-section">لا يوجد لديك اية فواتير</div>
+              )}
             </div>
           </Fade>
         );
@@ -177,6 +210,7 @@ const AllInvoices = ({ invoices }) => {
         handleClose={handleClose}
         companyInfo={companyInfo}
       />
+      <InvoiceDialog dialogData={dialog} />
     </div>
   );
 };
