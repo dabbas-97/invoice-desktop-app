@@ -51,8 +51,8 @@ const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
 
         <Grid container spacing={10} className="invoice-info">
           <Grid item xs={4}>
-            <div> الرقم: {renderNumber(invoice.number)}</div>
-            <div> الرقم الضريبي: 123124</div>
+            <div> الـــــــرقم: {renderNumber(invoice.number)}</div>
+            <div> الرقم الضريبي: 17195551</div>
           </Grid>
           <Grid item xs={4}>
             <div> </div>
@@ -124,7 +124,10 @@ const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
         <Grid container spacing={0} className="signature">
           <Grid item xs={6}></Grid>
           <Grid item xs={6}>
-            <div>أسم وتوقيع المستلم: </div>
+            <div className="signature-box">
+              <span>أسم وتوقيع المستلم:</span>
+              ......................................................................................................{" "}
+            </div>
           </Grid>
         </Grid>
         <Grid container spacing={0} className="footer-info">

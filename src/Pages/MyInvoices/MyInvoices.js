@@ -26,9 +26,8 @@ const MyInvoices = ({
     axios
       .get("http://127.0.0.1:5000/invoices/api/")
       .then((fetchedInvoices) => {
-        console.log(fetchedInvoices.data[0]);
         if (fetchedInvoices.data.length) {
-          setInvoices(fetchedInvoices.data);
+          setInvoices(fetchedInvoices.data.sort((a, b) => a.number - b.number));
           setLoading(false);
         } else {
           setLoading(false);
@@ -36,10 +35,6 @@ const MyInvoices = ({
       })
       .catch((err) => console.log(err));
   }, []);
-
-  useEffect(() => {
-    console.log(invoices);
-  }, [invoices]);
 
   const [editId, setEditId] = useState("");
 
@@ -49,7 +44,6 @@ const MyInvoices = ({
     setInvoiceData({
       ...invoice,
       cancel() {
-        console.log("edit canceled!");
         clearInvoiceData();
         setViewType("allInvoices");
       },

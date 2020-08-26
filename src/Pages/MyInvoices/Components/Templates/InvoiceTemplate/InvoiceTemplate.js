@@ -29,9 +29,9 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
         <h3>فـــاتـــورة</h3>
         <div className="invoice-info">
           <Grid container>
-            <Grid item xs={4}>
-              <div> رقم الفاتورة : {renderNumber(invoice.number)}</div>
-              <div> الرقم الضريبي: 123124</div>
+            <Grid item xs={4} className="align-right">
+              <div> رقم الفاتـــورة : {renderNumber(invoice.number)}</div>
+              <div> الرقم الضريبي: 17195551</div>
             </Grid>
             <Grid item xs={4}>
               <div> </div>
@@ -107,7 +107,10 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
         <Grid container className=" signature">
           <Grid item xs={6}></Grid>
           <Grid item xs={6}>
-            <div>التوقيـــع: </div>
+            <div className="signature-box">
+              <span>التوقيـــع:</span>
+              ........................................................................................................{" "}
+            </div>
           </Grid>
         </Grid>
 

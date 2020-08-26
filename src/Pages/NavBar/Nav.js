@@ -17,8 +17,8 @@ const Nav = ({ tab, setTab }) => {
         className="navbar"
       >
         <Tab label="الرئيسية" />
-        <Tab label="الفواتير" />
-        <Tab label="إضافة فاتورة جديدة" />
+        <Tab label="النظام المالي" />
+        <Tab label="إدخال بيانات الشركات" />
       </Tabs>
     </>
   );

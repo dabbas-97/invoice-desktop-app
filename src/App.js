@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Container } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -47,9 +47,6 @@ const App = () => {
       },
     });
   };
-  useEffect(() => {
-    console.log(invoiceData);
-  }, [invoiceData]);
 
   const postInvoice = () => {
     setLoading(true);
@@ -74,8 +71,7 @@ const App = () => {
           date: invoiceData.cheque.date,
         },
       })
-      .then((addedInvoice) => {
-        console.log(addedInvoice);
+      .then(() => {
         setLoading(false);
         clearInvoiceData();
         setTab(1);

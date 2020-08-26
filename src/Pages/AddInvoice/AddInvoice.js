@@ -25,7 +25,6 @@ const AddInvoice = ({
       message: "سيتم إضافة الفاتورة ، إتمام العملية؟",
       openDialog: true,
       cancel() {
-        console.log("cancel addition");
         setDialog({ openDialog: false });
       },
     });

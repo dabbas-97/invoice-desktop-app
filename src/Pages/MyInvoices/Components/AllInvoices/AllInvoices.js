@@ -71,7 +71,6 @@ const AllInvoices = ({
       message: "سيتم حذف الفاتورة ، هل انت متأكد؟",
       openDialog: true,
       cancel() {
-        console.log("cancel deletion");
         setDialog({ openDialog: false });
       },
     });
