@@ -6,7 +6,7 @@ import { AiOutlinePrinter } from "react-icons/ai";
 import { IconButton, Button, Fade, Grid } from "@material-ui/core";
 import Moment from "react-moment";
 
-const InvoiceTemplate = ({ invoice, backToInvoices }) => {
+const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
   return (
     <Fade in={true} timeout={500}>
       <div className="invoice-box " id="section-to-print">
@@ -30,7 +30,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
         <div className="invoice-info">
           <Grid container>
             <Grid item xs={4}>
-              <div> رقم الفاتورة : {invoice.number}</div>
+              <div> رقم الفاتورة : {renderNumber(invoice.number)}</div>
               <div> الرقم الضريبي: 123124</div>
             </Grid>
             <Grid item xs={4}>
@@ -86,7 +86,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
             <div>ضريـبة المبيعات (16%):</div>
           </Grid>
           <Grid item xs={1} className="bold">
-            <div>{Number(invoice.amountNumbers) * 0.16}</div>
+            <div>{Number(Math.round(invoice.amountNumbers)) * 0.16}</div>
           </Grid>
         </Grid>
         <Grid container className="invoice-amount">
@@ -96,8 +96,10 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
           </Grid>
           <Grid item xs={1} className="bold invoice-total">
             <div>
-              {Number(invoice.amountNumbers) * 0.16 +
-                Number(invoice.amountNumbers)}
+              {Math.trunc(
+                Number(invoice.amountNumbers) * 0.16 +
+                  Number(invoice.amountNumbers)
+              )}
             </div>
           </Grid>
         </Grid>

@@ -15,14 +15,14 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL(
+  const startUrl =
     process.env.ELECTRON_START_URL ||
-      url.format({
-        pathname: path.join(__dirname, "/../public/index.html"),
-        protocol: "file:",
-        slashes: true,
-      })
-  );
+    url.format({
+      pathname: path.join(__dirname, "/../build/index.html"),
+      protocol: "file:",
+      slashes: true,
+    });
+  mainWindow.loadURL(startUrl);
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -32,9 +32,7 @@ function createWindow() {
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on("activate", () => {

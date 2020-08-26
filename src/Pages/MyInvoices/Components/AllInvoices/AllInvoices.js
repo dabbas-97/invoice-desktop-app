@@ -9,8 +9,6 @@ import { BsBuilding } from "react-icons/bs";
 import ReceiptTemplate from "../Templates/ReceiptTemplate/ReceiptTemplate";
 import { CompanyInfoModal } from "../CompanyInfoModal/CompanyInfoModal";
 import { ContractModal } from "../ContractModal/ContractModal";
-import { InvoiceDialog } from "../../../forms/InvoiceDialog/InvoiceDialog";
-import axios from "axios";
 import Moment from "react-moment";
 
 const AllInvoices = ({
@@ -69,7 +67,7 @@ const AllInvoices = ({
     setDeleteId(id);
     setDialog({
       action: "حذف",
-      title: `حذف الفاتورة رقم ${id}`,
+      title: `حذف فاتورة `,
       message: "سيتم حذف الفاتورة ، هل انت متأكد؟",
       openDialog: true,
       cancel() {
@@ -78,7 +76,19 @@ const AllInvoices = ({
       },
     });
   };
-
+  const renderNumber = (number) => {
+    const length = String(number).length;
+    switch (length) {
+      case 1:
+        return "000".concat(number);
+      case 2:
+        return "00".concat(number);
+      case 3:
+        return "0".concat(number);
+      default:
+        return number;
+    }
+  };
   const fetchInvoices = () => {
     return invoiceData.map((invoice) => (
       <Grid container className="invoices_data" key={invoice._id}>
@@ -174,11 +184,19 @@ const AllInvoices = ({
         );
       case 1:
         return (
-          <InvoiceTemplate invoice={invoice} backToInvoices={backToInvoices} />
+          <InvoiceTemplate
+            invoice={invoice}
+            backToInvoices={backToInvoices}
+            renderNumber={renderNumber}
+          />
         );
       case 2:
         return (
-          <ReceiptTemplate invoice={invoice} backToInvoices={backToInvoices} />
+          <ReceiptTemplate
+            invoice={invoice}
+            backToInvoices={backToInvoices}
+            renderNumber={renderNumber}
+          />
         );
     }
   };

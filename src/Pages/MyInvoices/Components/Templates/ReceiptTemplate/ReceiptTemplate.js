@@ -5,7 +5,7 @@ import { AiOutlinePrinter } from "react-icons/ai";
 import { IconButton, Button, Fade, Grid } from "@material-ui/core";
 import Moment from "react-moment";
 
-const ReceiptTemplate = ({ invoice, backToInvoices }) => {
+const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
   return (
     <Fade in={true} timeout={500}>
       <div className="invoice-box " id="section-to-print">
@@ -51,7 +51,7 @@ const ReceiptTemplate = ({ invoice, backToInvoices }) => {
 
         <Grid container spacing={10} className="invoice-info">
           <Grid item xs={4}>
-            <div> الرقم: {invoice.number}</div>
+            <div> الرقم: {renderNumber(invoice.number)}</div>
             <div> الرقم الضريبي: 123124</div>
           </Grid>
           <Grid item xs={4}>
