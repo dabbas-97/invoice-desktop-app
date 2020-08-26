@@ -2,13 +2,14 @@ const { app, BrowserWindow } = require("electron");
 
 const path = require("path");
 const url = require("url");
+require("../invoice-backend/server");
 
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1777,
-    height: 600,
+    height: 1000,
     webPreferences: {
       nodeIntegration: true,
     },

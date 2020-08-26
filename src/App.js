@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Container } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -11,41 +11,83 @@ import AddInvoice from "./Pages/AddInvoice/AddInvoice";
 import Rtl from "./config/Rtl";
 // End of Components
 
+import axios from "axios";
+
 const App = () => {
   const [dialog, setDialog] = useState({
     openDialog: false,
   });
+  const [loading, setLoading] = useState(false);
   const [invoiceData, setInvoiceData] = useState({});
-  const clearInvoiceData = () => {
+  const clearInvoiceData = (number = 0) => {
     setInvoiceData({
-      number: 1123,
+      id: "",
       name: "",
       location: "",
       manager: "",
       phone: "",
       email: "",
       contract: "",
-      amountWords: "",
-      amountNumbers: 0,
-      duration: "",
-      payment: "cash",
+      number, // get invoices numbers +1
       date: new Date(),
+      payment: "cheque",
+      duration: "",
+      amountNumbers: "",
+      amountWords: "",
       cheque: {
         number: "",
         bank: "",
         branch: "",
         date: new Date(),
       },
+
       cancel() {
         clearInvoiceData();
         setTab(0);
       },
-      confirm() {
-        console.log("submited!!");
+    });
+  };
+  useEffect(() => {
+    console.log(invoiceData);
+  }, [invoiceData]);
+
+  const postInvoice = () => {
+    setLoading(true);
+    axios
+      .post("http://127.0.0.1:5000/invoices/api/", {
+        name: invoiceData.name,
+        location: invoiceData.location,
+        manager: invoiceData.manager,
+        phone: invoiceData.phone,
+        email: invoiceData.email,
+        duration: invoiceData.duration,
+        contract: invoiceData.contract,
+        number: invoiceData.number,
+        date: invoiceData.date,
+        payment: invoiceData.payment,
+        amountNumbers: invoiceData.amountNumbers,
+        amountWords: invoiceData.amountWords,
+        cheque: {
+          number: invoiceData.cheque.number,
+          bank: invoiceData.cheque.bank,
+          branch: invoiceData.cheque.branch,
+          date: invoiceData.cheque.date,
+        },
+      })
+      .then((addedInvoice) => {
+        console.log(addedInvoice);
+        setLoading(false);
         clearInvoiceData();
         setTab(1);
-      },
-    });
+        setDialog({ openDialog: false });
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        clearInvoiceData();
+        setTab(1);
+        setDialog({ openDialog: false });
+      });
   };
 
   const handleInvoice = (value) => (e) => {
@@ -101,6 +143,9 @@ const App = () => {
             clearInvoiceData={clearInvoiceData}
             dialog={dialog}
             setDialog={setDialog}
+            loading={loading}
+            setLoading={setLoading}
+            postInvoice={postInvoice}
           />
         );
       default:

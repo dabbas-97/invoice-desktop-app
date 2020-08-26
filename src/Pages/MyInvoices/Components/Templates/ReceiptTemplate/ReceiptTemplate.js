@@ -3,8 +3,9 @@ import Logo from "../../../../../images/logo.jpg";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { AiOutlinePrinter } from "react-icons/ai";
 import { IconButton, Button, Fade, Grid } from "@material-ui/core";
+import Moment from "react-moment";
 
-const InvoiceTemplate = ({ receipt, backToInvoices }) => {
+const ReceiptTemplate = ({ invoice, backToInvoices }) => {
   return (
     <Fade in={true} timeout={500}>
       <div className="invoice-box " id="section-to-print">
@@ -39,12 +40,9 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
             <div className="center">
-              {" "}
+              <span className="inline-block receipt-amount">{"000"}</span>
               <span className="inline-block receipt-amount">
-                {receipt.amountNumbers || "000"}
-              </span>
-              <span className="inline-block receipt-amount">
-                {receipt.amountNumbers || 1000}
+                {invoice.amountNumbers}
               </span>
             </div>
           </Grid>
@@ -53,14 +51,16 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
 
         <Grid container spacing={10} className="invoice-info">
           <Grid item xs={4}>
-            <div> الرقم: {receipt.number}</div>
+            <div> الرقم: {invoice.number}</div>
             <div> الرقم الضريبي: 123124</div>
           </Grid>
           <Grid item xs={4}>
             <div> </div>
           </Grid>
           <Grid item xs={4}>
-            <div> التاريخ : {receipt.dateCreated}</div>
+            <div>
+              التاريخ : <Moment format="YYYY/MM/DD">{invoice.date}</Moment>
+            </div>
           </Grid>
         </Grid>
         <div className="main-info">
@@ -69,7 +69,7 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
               <div>وصلنا من السيد/السادة: </div>
             </Grid>
             <Grid item xs={8}>
-              <div className="bold"> {receipt.name}</div>
+              <div className="bold"> {invoice.name}</div>
             </Grid>
           </Grid>
 
@@ -78,7 +78,7 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
               <div>مبـــــلغ وقـــــــدره: </div>
             </Grid>
             <Grid item xs={8}>
-              <div className="bold"> {receipt.amountWords}</div>
+              <div className="bold"> {invoice.amountWords}</div>
             </Grid>
           </Grid>
 
@@ -87,7 +87,7 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
               <div>وذلك عــــــن: </div>
             </Grid>
             <Grid item xs={8}>
-              <div className="bold"> {receipt.agreementDescription}</div>
+              <div className="bold"> {invoice.contract}</div>
             </Grid>
           </Grid>
           <Grid container className="big-info">
@@ -95,23 +95,28 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
               <div>بموجب: </div>
             </Grid>
             <Grid item xs={8}>
-              <div className="bold"> {receipt.type}</div>
+              <div className="bold">
+                {invoice.payment === "cheque" ? "شيك" : "نقداً"}
+              </div>
             </Grid>
           </Grid>
 
-          {!receipt.cheque && (
+          {invoice.payment === "cheque" && (
             <Grid container className="big-info">
               <Grid item xs={3}>
-                <div>رقم: </div>
+                <div>رقم: {invoice.cheque.number} </div>
               </Grid>
               <Grid item xs={3}>
-                <div> بنك:</div>
+                <div> بنك: {invoice.cheque.bank} </div>
               </Grid>
               <Grid item xs={3}>
-                <div> فرع:</div>
+                <div> فرع: {invoice.cheque.branch} </div>
               </Grid>
               <Grid item xs={3}>
-                <div> تاريخ:</div>
+                <div>
+                  تاريخ:{" "}
+                  <Moment format="YYYY/MM/DD">{invoice.cheque.date}</Moment>
+                </div>
               </Grid>
             </Grid>
           )}
@@ -150,4 +155,4 @@ const InvoiceTemplate = ({ receipt, backToInvoices }) => {
   );
 };
 
-export default InvoiceTemplate;
+export default ReceiptTemplate;

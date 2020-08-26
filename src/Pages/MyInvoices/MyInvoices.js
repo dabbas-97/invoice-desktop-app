@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AllInvoices from "./Components/AllInvoices/AllInvoices";
 import { InvoiceForm } from "../forms/InvoiceForm/InvoiceForm";
 import { Fade } from "@material-ui/core";
 import { InvoiceDialog } from "../forms/InvoiceDialog/InvoiceDialog";
 
+import axios from "axios";
+
 const MyInvoices = ({
-  setTab,
   handleInvoice,
   invoiceData,
   handleCheque,
@@ -15,112 +16,116 @@ const MyInvoices = ({
   dialog,
 }) => {
   const [viewType, setViewType] = useState("allInvoices");
-  const [invoiceId, setInvoiceId] = useState(null);
-  const DUMMY_INVOICES = [
-    {
-      id: 1,
-      amount: 500,
-      contract: "لمدة سنة",
-      number: 4421,
-      date: "12/05/2020",
-      name: "شركة زين",
-    },
-    {
-      id: 12,
-      amount: 500,
-      contract: "لمدة سنة",
-      number: 4421,
-      date: "12/05/2020",
-      name: "شركة زين",
-    },
-    {
-      id: 13,
-      amount: 500,
-      contract: "لمدة سنة",
-      number: 4421,
-      date: "12/05/2020",
-      name: "شركة زين",
-    },
-  ];
+  const [loading, setLoading] = useState(false);
+  const [invoices, setInvoices] = useState([]);
+
+  //! Fetching all invoices from the database and inserting them into invoices state
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://127.0.0.1:5000/invoices/api/")
+      .then((fetchedInvoices) => {
+        console.log(fetchedInvoices.data[0]);
+        if (fetchedInvoices.data.length) {
+          setInvoices(fetchedInvoices.data);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    console.log(invoices);
+  }, [invoices]);
+
+  const [editId, setEditId] = useState("");
 
   const editInvoice = (id) => {
-    //Todo: fetch invoice info from database
-    setInvoiceId(id);
+    const invoice = invoices.find((invoice) => invoice._id === id);
+    setEditId(id);
     setInvoiceData({
-      number: 5235235,
-      name: "تامر حسني",
-      location: "الثامن",
-      manager: "خلليل يسبسي",
-      phone: "صفر سبعة تسعة خمسة ستة ستة صفر سبعة ثلاث ثمانية",
-      email: "حمزة دوت دي اندرسكور سبعة وتسعين اي ياهعو دوت كوم",
-      contract: "البيان از هير",
-      amountWords: "الف ليرة لا عير",
-      amountNumbers: 66634,
-      duration: "سنوي",
-      payment: "cheque",
-      date: new Date(),
-      cheque: {
-        number: "452535",
-        bank: "العربي",
-        branch: "دوار الواحة",
-        date: new Date(),
-      },
+      ...invoice,
       cancel() {
         console.log("edit canceled!");
         clearInvoiceData();
         setViewType("allInvoices");
       },
-      confirm() {
-        //Todo submit data stored in invoiceData to the invoice with id (invoiceId)
-        console.log("invoice edited!");
-        setViewType("allInvoices");
-        clearInvoiceData();
-      },
     });
     setViewType("editInvoice");
   };
-
+  //! Dialog for edit
   const proceed = () => {
     setDialog({
       action: "حفظ",
       title: `حفظ التغييرات `,
       message: "سيتم حفظ التغييرات على الفاتورة ، إتمام العملية؟",
       openDialog: true,
-      confirm() {
-        //Todo delete the invoice with the id (dialog.id)
-        console.log("invoice edited!!!!");
-        invoiceData.confirm();
-        setDialog({ openDialog: false });
-      },
+
       cancel() {
         setDialog({ openDialog: false });
       },
     });
   };
 
+  const confirmEdit = () => {
+    axios
+      .patch(`http://127.0.0.1:5000/invoices/api/${editId}`, invoiceData)
+      .then((data) => {
+        setInvoices(
+          invoices.map((invoice) =>
+            invoice._id === editId ? invoiceData : invoice
+          )
+        );
+        setDialog({ openDialog: false });
+        setViewType("allInvoices");
+        clearInvoiceData();
+      });
+  };
+
+  const [deleteId, setDeleteId] = useState("");
+  useEffect(() => {}, [deleteId]);
+
+  const confirmDeletion = () => {
+    axios.delete(`http://127.0.0.1:5000/invoices/api/${deleteId}`).then(() => {
+      setInvoices(invoices.filter((invoice) => invoice._id !== deleteId));
+      setDialog({ openDialog: false });
+      setDeleteId("");
+    });
+  };
   return (
     <>
-      {viewType === "allInvoices" ? (
-        <AllInvoices
-          invoices={DUMMY_INVOICES}
-          editInvoice={editInvoice}
-          dialog={dialog}
-          setDialog={setDialog}
+      <div>
+        {viewType === "allInvoices" ? (
+          <AllInvoices
+            invoiceData={invoices}
+            editInvoice={editInvoice}
+            dialog={dialog}
+            setDialog={setDialog}
+            loading={loading}
+            setDeleteId={setDeleteId}
+          />
+        ) : (
+          <Fade in={true} timeout={500}>
+            <div className="add_invoice">
+              <InvoiceForm
+                handleInvoice={handleInvoice}
+                invoice={invoiceData}
+                handleCheque={handleCheque}
+                proceed={proceed}
+                dialog={dialog}
+              />
+            </div>
+          </Fade>
+        )}
+        <InvoiceDialog
+          dialogData={dialog}
+          confirmDeletion={confirmDeletion}
+          completeEdit={confirmEdit}
         />
-      ) : (
-        <Fade in={true} timeout={500}>
-          <div className="add_invoice">
-            <InvoiceForm
-              handleInvoice={handleInvoice}
-              invoice={invoiceData}
-              handleCheque={handleCheque}
-              proceed={proceed}
-              dialog={dialog}
-            />
-          </div>
-        </Fade>
-      )}
-      <InvoiceDialog dialogData={dialog} />
+      </div>
     </>
   );
 };

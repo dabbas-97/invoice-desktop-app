@@ -22,9 +22,6 @@ export const InvoiceForm = ({
   invoice,
   proceed,
 }) => {
-  useEffect(() => {
-    console.log(invoice);
-  }, [invoice]);
   return (
     <form autoComplete="off" className="add_invoice_form">
       <h3> بيانات الشركة</h3>

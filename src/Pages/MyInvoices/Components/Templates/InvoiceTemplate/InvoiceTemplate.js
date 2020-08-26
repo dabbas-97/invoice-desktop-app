@@ -4,6 +4,7 @@ import Logo from "../../../../../images/logo.jpg";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { AiOutlinePrinter } from "react-icons/ai";
 import { IconButton, Button, Fade, Grid } from "@material-ui/core";
+import Moment from "react-moment";
 
 const InvoiceTemplate = ({ invoice, backToInvoices }) => {
   return (
@@ -36,7 +37,9 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
               <div> </div>
             </Grid>
             <Grid item xs={4}>
-              <div> التاريخ : {invoice.dateCreated}</div>
+              <div>
+                التاريخ : <Moment format="YYYY/MM/DD">{invoice.date}</Moment>
+              </div>
             </Grid>
           </Grid>
         </div>
@@ -64,7 +67,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
               <div>وذلك عــــــن: </div>
             </Grid>
             <Grid item xs={8}>
-              <div className="bold"> {invoice.agreementDescription}</div>
+              <div className="bold"> {invoice.contract}</div>
             </Grid>
           </Grid>
         </div>
@@ -83,7 +86,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
             <div>ضريـبة المبيعات (16%):</div>
           </Grid>
           <Grid item xs={1} className="bold">
-            <div>{invoice.amountNumbers * 0.16}</div>
+            <div>{Number(invoice.amountNumbers) * 0.16}</div>
           </Grid>
         </Grid>
         <Grid container className="invoice-amount">
@@ -92,7 +95,10 @@ const InvoiceTemplate = ({ invoice, backToInvoices }) => {
             <div>القيمة الأجمالية (دينار):</div>
           </Grid>
           <Grid item xs={1} className="bold invoice-total">
-            <div>{invoice.amountNumbers * 0.16 + invoice.amountNumbers}</div>
+            <div>
+              {Number(invoice.amountNumbers) * 0.16 +
+                Number(invoice.amountNumbers)}
+            </div>
           </Grid>
         </Grid>
 

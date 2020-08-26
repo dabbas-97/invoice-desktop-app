@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AllInvoices.css";
 import InvoiceTemplate from "../Templates/InvoiceTemplate/InvoiceTemplate";
-import { Grid, Fade } from "@material-ui/core/";
+import { Grid, Fade, CircularProgress } from "@material-ui/core/";
 import { FaFileInvoice } from "react-icons/fa";
 import { BiReceipt } from "react-icons/bi";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
@@ -10,43 +10,30 @@ import ReceiptTemplate from "../Templates/ReceiptTemplate/ReceiptTemplate";
 import { CompanyInfoModal } from "../CompanyInfoModal/CompanyInfoModal";
 import { ContractModal } from "../ContractModal/ContractModal";
 import { InvoiceDialog } from "../../../forms/InvoiceDialog/InvoiceDialog";
+import axios from "axios";
+import Moment from "react-moment";
 
-const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
+const AllInvoices = ({
+  invoiceData,
+  editInvoice,
+  dialog,
+  setDialog,
+  loading,
+  setDeleteId,
+}) => {
   //*showing invoice or receipt details
   const [pageType, setPageType] = useState(0);
   const [invoice, setInvoice] = useState({});
 
-  const getInvoice = (id) => {
-    //TODO: fetch invoice data from database
-    setInvoice({
-      number: 1334,
-      dateCreated: "12/05/2020",
-      name: "شركة زين",
-      agreementDescription: "عقد من شرطك يبسو سيبب بقيمةو ببي",
-      amountWords: "الف دينار لا غير",
-      amountNumbers: 1000,
-    });
+  const getInvoiceTemplate = (id) => {
+    const invoice = invoiceData.find((invoice) => invoice._id === id);
+    setInvoice(invoice);
     setPageType(1);
   };
 
-  const getReceipt = (id) => {
-    //TODO: fetch receipt data from database
-    setInvoice({
-      number: 1334,
-      dateCreated: "12/05/2020",
-      name: "شركة زين",
-      agreementDescription: "عقد من شرطك يبسو سيبب بقيمةو ببي",
-      payments: [
-        {
-          type: "دفعة لـ6 شهور",
-          amount: 500,
-        },
-        {
-          type: "دفعة لـ6 شهور",
-          amount: 500,
-        },
-      ],
-    });
+  const getReceiptTemplate = (id) => {
+    const invoice = invoiceData.find((invoice) => invoice._id === id);
+    setInvoice(invoice);
     setPageType(2);
   };
   const backToInvoices = () => {
@@ -58,8 +45,8 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
   const [showContract, setShowContract] = useState(false);
 
   const getContractDetails = (id) => {
-    //TODO: fetch contract details from database
-    setContractDetails("tamer hosny in the house");
+    const invoice = invoiceData.find((invoice) => invoice._id === id);
+    setContractDetails(invoice.contract);
     setShowContract(true);
   };
   //* showing company info
@@ -67,14 +54,8 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
   const [showCompanyInfo, setShowCompanyInfo] = useState(false);
 
   const getCompanyInfo = (id) => {
-    //TODO: fetch contract details from database
-    setCompanyInfo({
-      name: "شركة زين",
-      location: "الدوار الثامن",
-      manager: "مي المؤقت",
-      email: "maimpss@zain.com",
-      phone: "0794234234",
-    });
+    const invoice = invoiceData.find((invoice) => invoice._id === id);
+    setCompanyInfo(invoice);
     setShowCompanyInfo(true);
   };
 
@@ -82,18 +63,15 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
     setShowContract(false);
     setShowCompanyInfo(false);
   };
+  //! Dialog for Deletion
 
   const deleteInvoice = (id) => {
+    setDeleteId(id);
     setDialog({
       action: "حذف",
       title: `حذف الفاتورة رقم ${id}`,
       message: "سيتم حذف الفاتورة ، هل انت متأكد؟",
       openDialog: true,
-      confirm() {
-        //Todo delete the invoice with the id (dialog.id)
-        console.log("invoice deleted!!!");
-        setDialog({ openDialog: false });
-      },
       cancel() {
         console.log("cancel deletion");
         setDialog({ openDialog: false });
@@ -102,8 +80,8 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
   };
 
   const fetchInvoices = () => {
-    return invoices.map((invoice) => (
-      <Grid container className="invoices_data" key={invoice.id}>
+    return invoiceData.map((invoice) => (
+      <Grid container className="invoices_data" key={invoice._id}>
         <Grid item xs={2}>
           {invoice.name}
         </Grid>
@@ -111,12 +89,12 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           item
           xs={1}
           className="invoice_icon"
-          onClick={() => getCompanyInfo(invoice.id)}
+          onClick={() => getCompanyInfo(invoice._id)}
         >
           <BsBuilding />
         </Grid>
         <Grid item xs={1}>
-          {invoice.date}
+          <Moment format="YYYY/MM/DD">{invoice.date}</Moment>
         </Grid>
         <Grid item xs={1}>
           {invoice.number}
@@ -125,21 +103,21 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           item
           xs={1}
           className="invoice_icon"
-          onClick={() => getContractDetails(invoice.id)}
+          onClick={() => getContractDetails(invoice._id)}
         >
           <BiReceipt />
         </Grid>
         <Grid item xs={1}>
-          {invoice.contract}
+          {invoice.duration}
         </Grid>
         <Grid item xs={1}>
-          {invoice.amount}
+          {invoice.amountNumbers}
         </Grid>
         <Grid
           item
           xs={1}
           className="invoice_icon"
-          onClick={() => getInvoice(invoice.id)}
+          onClick={() => getInvoiceTemplate(invoice._id)}
         >
           <FaFileInvoice />
         </Grid>
@@ -147,7 +125,7 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           item
           xs={1}
           className="invoice_icon"
-          onClick={() => getReceipt(invoice.id)}
+          onClick={() => getReceiptTemplate(invoice._id)}
         >
           <FaFileInvoice />
         </Grid>
@@ -155,7 +133,7 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           item
           xs={1}
           className="edit_icon"
-          onClick={() => editInvoice(invoice.id)}
+          onClick={() => editInvoice(invoice._id)}
         >
           <AiFillEdit />
         </Grid>
@@ -163,7 +141,7 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           item
           xs={1}
           className="delete_icon"
-          onClick={() => deleteInvoice(invoice.id)}
+          onClick={() => deleteInvoice(invoice._id)}
         >
           <AiOutlineDelete />
         </Grid>
@@ -178,10 +156,18 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
           <Fade in={true} timeout={500}>
             <div className="invoices_container">
               <AllInvoicesTitle />
-              {invoices ? (
-                fetchInvoices()
+              {loading ? (
+                <div className="empty-section">
+                  <CircularProgress className="spinner" />
+                </div>
               ) : (
-                <div className="empty-section">لا يوجد لديك اية فواتير</div>
+                <div>
+                  {invoiceData.length ? (
+                    fetchInvoices()
+                  ) : (
+                    <div className="empty-section">لا يوجد لديك اية فواتير</div>
+                  )}
+                </div>
               )}
             </div>
           </Fade>
@@ -192,7 +178,7 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
         );
       case 2:
         return (
-          <ReceiptTemplate receipt={invoice} backToInvoices={backToInvoices} />
+          <ReceiptTemplate invoice={invoice} backToInvoices={backToInvoices} />
         );
     }
   };
@@ -210,7 +196,6 @@ const AllInvoices = ({ invoices, editInvoice, dialog, setDialog }) => {
         handleClose={handleClose}
         companyInfo={companyInfo}
       />
-      <InvoiceDialog dialogData={dialog} />
     </div>
   );
 };
