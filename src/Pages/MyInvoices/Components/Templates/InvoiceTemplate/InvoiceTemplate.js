@@ -22,7 +22,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
             <div>مــــــــوقع رؤيـــــــــا نيــــــوز</div>
 
             <div>شركة صدق الرؤيا الاقتصادي</div>
-            <div className="roya-link">www.Royanews.com</div>
+            <div className="roya-link">www.royanews.com</div>
           </Grid>
         </Grid>
 
@@ -30,8 +30,22 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
         <div className="invoice-info">
           <Grid container>
             <Grid item xs={4} className="align-right">
-              <div> رقم الفاتـــورة : {renderNumber(invoice.number)}</div>
-              <div> الرقم الضريبي: 17195551</div>
+              <Grid container>
+                <Grid item xs={6}>
+                  رقم الفاتورة:
+                </Grid>
+                <Grid item xs={6}>
+                  {renderNumber(invoice.number)}
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={6}>
+                  الرقم الضريبي:
+                </Grid>
+                <Grid item xs={6}>
+                  17195551
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={4}>
               <div> </div>
@@ -86,7 +100,10 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
             <div>ضريـبة المبيعات (16%):</div>
           </Grid>
           <Grid item xs={1} className="bold">
-            <div>{Number(Math.round(invoice.amountNumbers)) * 0.16}</div>
+            <div>
+              {Number(Math.round(invoice.amountNumbers)) *
+                (invoice.tax ? 0.16 : 0)}
+            </div>
           </Grid>
         </Grid>
         <Grid container className="invoice-amount">
@@ -97,7 +114,7 @@ const InvoiceTemplate = ({ invoice, backToInvoices, renderNumber }) => {
           <Grid item xs={1} className="bold invoice-total">
             <div>
               {Math.trunc(
-                Number(invoice.amountNumbers) * 0.16 +
+                Number(invoice.amountNumbers) * (invoice.tax ? 0.16 : 0) +
                   Number(invoice.amountNumbers)
               )}
             </div>

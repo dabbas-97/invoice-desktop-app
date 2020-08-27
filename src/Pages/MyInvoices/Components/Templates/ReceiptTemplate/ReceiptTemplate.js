@@ -21,7 +21,7 @@ const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
             <div>مــــــــوقع رؤيـــــــــا نيــــــوز</div>
 
             <div>شركة صدق الرؤيا الاقتصادي</div>
-            <div className="roya-link">www.Royanews.com</div>
+            <div className="roya-link">www.royanews.com</div>
           </Grid>
         </Grid>
 
@@ -49,17 +49,31 @@ const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
           <Grid item xs={4}></Grid>
         </Grid>
 
-        <Grid container spacing={10} className="invoice-info">
+        <Grid container spacing={6} className="invoice-info">
           <Grid item xs={4}>
-            <div> الـــــــرقم: {renderNumber(invoice.number)}</div>
-            <div> الرقم الضريبي: 17195551</div>
+            <Grid container>
+              <Grid item xs={6}>
+                الـــــــرقم:
+              </Grid>
+              <Grid item xs={6}>
+                {renderNumber(invoice.number)}
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={6}>
+                الرقم الضريبي:
+              </Grid>
+              <Grid item xs={6}>
+                17195551
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={4}>
             <div> </div>
           </Grid>
           <Grid item xs={4}>
             <div>
-              التاريخ : <Moment format="YYYY/MM/DD">{invoice.date}</Moment>
+              <Moment format="YYYY/MM/DD">{invoice.receiptDate}</Moment>
             </div>
           </Grid>
         </Grid>
@@ -115,7 +129,9 @@ const ReceiptTemplate = ({ invoice, backToInvoices, renderNumber }) => {
               <Grid item xs={3}>
                 <div>
                   تاريخ:{" "}
-                  <Moment format="YYYY/MM/DD">{invoice.cheque.date}</Moment>
+                  {invoice.cheque.fillDate || (
+                    <Moment format="YYYY/MM/DD">{invoice.cheque.date}</Moment>
+                  )}
                 </div>
               </Grid>
             </Grid>

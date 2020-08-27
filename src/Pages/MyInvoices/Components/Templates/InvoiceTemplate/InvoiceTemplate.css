@@ -135,7 +135,8 @@
   text-align: center;
   display: block !important;
   margin: auto !important;
-  top: 40px;
+  top: -50px;
+  right: -200px;
 }
 .print-btn {
   margin: 30px;

@@ -7,6 +7,7 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Checkbox,
 } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -95,14 +96,14 @@ export const InvoiceForm = ({
             value={invoice.number}
           />
         </Grid>
-        <Grid item xs={4} className="date_picker">
+        <Grid item xs={2} className="date_picker">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
-              label="التاريخ"
+              label="تاريخ الفاتورة"
               value={invoice.date}
               onChange={handleInvoice("date")}
               KeyboardButtonProps={{
@@ -111,9 +112,25 @@ export const InvoiceForm = ({
             />
           </MuiPickersUtilsProvider>
         </Grid>
+        <Grid item xs={2} className="date_picker">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              label="تاريخ القبض"
+              value={invoice.receiptDate}
+              onChange={handleInvoice("receiptDate")}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
       </Grid>
       <Grid container direction="row" spacing={4}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <TextField
             onChange={handleInvoice("amountWords")}
             label="القيمة"
@@ -122,13 +139,25 @@ export const InvoiceForm = ({
             value={invoice.amountWords}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <TextField
             onChange={handleInvoice("amountNumbers")}
             label=" القيمة بالارقام"
             variant="outlined"
             size="small"
             value={invoice.amountNumbers}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={invoice.tax}
+                color="primary"
+                onChange={handleInvoice("tax")}
+              />
+            }
+            label="ضريبة المبيعات"
           />
         </Grid>
 
@@ -166,7 +195,7 @@ export const InvoiceForm = ({
       {invoice.payment === "cheque" && (
         <Fade in={true} timeout={500}>
           <Grid container direction="row" spacing={4}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <TextField
                 onChange={handleCheque("number")}
                 label="رقم الشيك"
@@ -184,7 +213,7 @@ export const InvoiceForm = ({
                 value={invoice.cheque.bank}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <TextField
                 onChange={handleCheque("branch")}
                 label="فرع"
@@ -193,21 +222,35 @@ export const InvoiceForm = ({
                 value={invoice.cheque.branch}
               />
             </Grid>
+            <Grid item xs={2}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={invoice.cheque.fillDate}
+                    color="primary"
+                    onChange={handleCheque("fillDate")}
+                  />
+                }
+                label="تاريخ يدوي"
+              />
+            </Grid>
             <Grid item xs={3} className="date_picker">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  label="التاريخ"
-                  value={invoice.cheque.date}
-                  onChange={handleCheque("date")}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
-              </MuiPickersUtilsProvider>
+              {invoice.cheque.fillDate || (
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    label="التاريخ"
+                    value={invoice.cheque.date}
+                    onChange={handleCheque("date")}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+              )}
             </Grid>
           </Grid>
         </Fade>

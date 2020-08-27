@@ -6,7 +6,7 @@
 .pnp.js
 /invoice-backend/node_modules
 /build
-/out
+/inv64
 /database
 /database/*
 

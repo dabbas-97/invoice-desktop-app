@@ -30,14 +30,17 @@ const App = () => {
       contract: "",
       number, // get invoices numbers +1
       date: new Date(),
-      payment: "cheque",
+      receiptDate: new Date(),
+      tax: false,
       duration: "",
       amountNumbers: "",
       amountWords: "",
+      payment: "cheque",
       cheque: {
         number: "",
         bank: "",
         branch: "",
+        fillDate: false,
         date: new Date(),
       },
 
@@ -61,13 +64,16 @@ const App = () => {
         contract: invoiceData.contract,
         number: invoiceData.number,
         date: invoiceData.date,
-        payment: invoiceData.payment,
+        receiptDate: invoiceData.receiptDate,
+        tax: invoiceData.tax,
         amountNumbers: invoiceData.amountNumbers,
         amountWords: invoiceData.amountWords,
+        payment: invoiceData.payment,
         cheque: {
           number: invoiceData.cheque.number,
           bank: invoiceData.cheque.bank,
           branch: invoiceData.cheque.branch,
+          fillDate: invoiceData.cheque.fillDate,
           date: invoiceData.cheque.date,
         },
       })
@@ -87,8 +93,10 @@ const App = () => {
   };
 
   const handleInvoice = (value) => (e) => {
-    if (value === "date") {
-      setInvoiceData({ ...invoiceData, date: e });
+    if (value === "date" || value === "receiptDate") {
+      setInvoiceData({ ...invoiceData, [value]: e });
+    } else if (value === "tax") {
+      setInvoiceData({ ...invoiceData, tax: e.target.checked });
     } else {
       setInvoiceData({ ...invoiceData, [value]: e.target.value });
     }
@@ -98,6 +106,11 @@ const App = () => {
       setInvoiceData({
         ...invoiceData,
         cheque: { ...invoiceData.cheque, date: e },
+      });
+    } else if (value === "fillDate") {
+      setInvoiceData({
+        ...invoiceData,
+        cheque: { ...invoiceData.cheque, fillDate: e.target.checked },
       });
     } else {
       setInvoiceData({
