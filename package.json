@@ -3,12 +3,21 @@
   "version": "0.1.0",
   "homepage": "./",
   "main": "src/start.js",
+  "author": "dabbas",
+  "description": "an app for invoices",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "https://royanews.com/wp-content/uploads/2020/02/royanews-logo-202001-Copy.jpeg",
+        "asar": true
+      },
       "makers": [
         {
-          "name": "@electron-forge/maker-zip"
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "certificateFile": "./cert.pfx",
+            "certificatePassword": "this-is-a-secret"
+          }
         }
       ]
     }
@@ -53,7 +62,7 @@
       "iconUrl": "https://royanews.com/wp-content/uploads/2020/02/royanews-logo-202001-Copy.jpeg"
     },
     "directories": {
-      "buildResources": "public"
+      "buildResources": "build"
     }
   },
   "browserslist": {
@@ -76,6 +85,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "electron": "^10.0.0",
+    "electron-installer-windows": "^3.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^4.0.1",
     "react-scripts": "3.4.3"
