@@ -234,27 +234,30 @@ export const InvoiceForm = ({
                 label="تاريخ يدوي"
               />
             </Grid>
-            <Grid item xs={3} className="date_picker">
+            <>
               {invoice.cheque.fillDate || (
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    label="التاريخ"
-                    value={invoice.cheque.date}
-                    onChange={handleCheque("date")}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>
+                <Grid item xs={3} className="date_picker">
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      label="التاريخ"
+                      value={invoice.cheque.date}
+                      onChange={handleCheque("date")}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
+                </Grid>
               )}
-            </Grid>
+            </>
           </Grid>
         </Fade>
       )}
+
       <hr />
       <Grid container direction="row" spacing={4}>
         <Grid item xs={2}>
