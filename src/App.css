@@ -4,9 +4,355 @@ label {
 }
 
 body {
-  background: #dedede;
+  background: #ececec;
 }
 .spinner {
   display: block !important;
   margin: auto;
+}
+/* Start *****************************************************************************/
+.invoices_container {
+  text-align: center;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #edeef3;
+}
+.invoices_title {
+  background: #3f51b5;
+  color: #e2e2e2;
+  font-weight: bold;
+}
+
+.invoices_data {
+  color: #2d2d2d;
+  font-weight: light;
+}
+.invoices_data:nth-child(odd) {
+  background: #c7c7c7;
+}
+.invoices_data:nth-child(even) {
+  background: #e4e4e4;
+}
+
+.invoice_icon,
+.delete_icon,
+.edit_icon {
+  cursor: pointer;
+  transition: all ease-in 0.26s;
+}
+.invoice_icon:hover,
+.delete_icon:hover,
+.edit_icon:hover {
+  background: darkgrey;
+}
+
+.empty-section {
+  padding: 30px;
+  border-radius: 3px;
+  background: #f3f3f3;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.delete_icon {
+  color: #c53f3f;
+}
+.invoice_icon {
+  color: #0e68d8;
+}
+
+.details_modal {
+  margin: 50px auto;
+  max-width: 700px;
+  background: white;
+  text-align: center;
+  min-height: 200px;
+  border: #13121273 solid 2px;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1.5em;
+}
+.details_modal h3 {
+  background: #3f51b5;
+  color: white;
+}
+.company-info-modal .MuiGrid-container {
+  border-bottom: solid #00000038 1px;
+  margin: 40px auto;
+}
+.company-info-modal .MuiGrid-container::before {
+  content: "";
+  border-right: solid #3f51b5 7px;
+}
+.company-info-modal {
+  padding: 20px 0;
+  overflow: hidden;
+  font-size: 20px;
+}
+.company-info-modal .MuiGrid-grid-xs-8 {
+  font-weight: bold;
+}
+.contract-modal p {
+  border-bottom: #00000038 solid 1px;
+  margin: 40px 20px 80px 20px;
+}
+.home {
+  padding: 10px 30px;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  margin: 10px 0;
+  background: #f3f3f3;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+.home h3 {
+  font-size: 2em;
+  color: #484848;
+}
+.home p {
+  direction: ltr;
+}
+.main-dialog {
+  text-align: center;
+  height: 200px;
+  width: 500px;
+}
+.main-dialog button {
+  margin: auto;
+}
+.MuiTab-root {
+  margin: auto !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #555;
+}
+.MuiTab-wrapper {
+  letter-spacing: normal;
+}
+.navbar {
+  background: #f3f3f3;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+}
+.add_invoice {
+  padding: 10px 30px;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  margin: 10px 0;
+  background: #f3f3f3;
+  position: relative;
+}
+.add_invoice h3::before,
+.add_invoice h2::before {
+  content: "";
+  border-right: #7e7e92 solid 4px;
+  margin-left: 14px;
+}
+.add_invoice h3,
+.add_invoice h2 {
+  color: #3f51c3;
+  margin-bottom: 30px;
+}
+.add_invoice h2 span {
+  font-size: 1.5rem;
+  color: #2d2d2d;
+  margin: 0 5px;
+  border-bottom: solid 1px black;
+}
+.add_invoice h2 {
+  font-size: 2.2em;
+}
+.title h1 {
+  color: #3f51c3;
+  margin: 20px 0;
+  width: 30%;
+  text-align: center;
+  border-bottom: solid 1px #5250509e;
+}
+.title {
+  display: flex;
+  justify-content: center;
+}
+.add_invoice_form {
+  margin: 10px 0;
+}
+.MuiFormControl-root {
+  width: 100%;
+}
+.MuiOutlinedInput-inputMarginDense {
+  padding-top: 15.5px !important;
+  padding-bottom: 15.5px !important;
+}
+.MuiFormControl-marginNormal {
+  margin-top: 0px !important;
+  color: #3f51c3;
+}
+.MuiFormLabel-root.Mui-focused {
+  color: #7e7e92 !important;
+}
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 2px solid rgb(63 81 195) !important;
+}
+.add_invoice hr {
+  margin: 60px 300px;
+  border: none;
+  min-height: 1px;
+  background: #a5a5a5;
+}
+
+.btn {
+  margin: auto;
+  display: block;
+  width: 100%;
+  font-size: 1.7em;
+  letter-spacing: normal;
+
+  transition: all 0.3s ease;
+}
+.cancel-btn:hover {
+  border-color: red !important;
+  color: red !important;
+}
+.cancel-btn {
+  border-color: #822c2c !important;
+  color: #822c2c !important;
+}
+.radio-buttons {
+  justify-content: center;
+  align-content: center;
+}
+.new-company {
+  padding: 20px 0;
+}
+.new-company .btn {
+  background-color: #e0e0e0;
+  color: #3f51b5;
+  font-weight: bold;
+  letter-spacing: normal;
+  font-size: 1.2em;
+  transition: all 0.3s ease-in-out;
+}
+.new-company .btn:hover {
+  background-color: #c5c5c5;
+}
+.no-companies {
+  background: #f3f3f3;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.no-companies h3 span {
+  color: #0e68d8;
+  cursor: pointer;
+}
+.no-companies h3 span:hover {
+  color: #2777da;
+}
+.page-logo-svg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.page-logo-svg img,
+.svg-background img {
+  max-height: 90%;
+  max-width: 90%;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.form-input-container {
+  flex: 1;
+}
+.svg-background {
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  opacity: 0.2;
+  z-index: -2;
+}
+.right-icon {
+  right: 5px;
+}
+
+.financial-data {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.drop-zone {
+  outline: none;
+  padding: 5px;
+  border: dashed 15px#909ee8;
+  width: 50%;
+  height: 50%;
+  margin: 20px auto;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #343434;
+  background-color: #f3f3f3;
+  position: relative;
+}
+.drop-zone:hover {
+  background-color: #fefefe;
+  border-color: #7c8bdc;
+  color: #6374d2;
+}
+.drop-zone img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.compress-image h3 {
+  color: #434343;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.compress-image h3 svg {
+  font-size: 1.7em;
+}
+
+.compress-image {
+  text-align: center;
+  border: #00000052 solid 1px;
+  border-radius: 3px;
+  margin: 10px 0;
+  background: #fefefe;
+}
+
+.loading-bar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4c4c4c8c;
+  top: 0;
+  left: 0;
+}
+.loading-bar svg {
+  color: #ffffff !important;
+}
+
+a {
+  text-decoration: none;
+  color: #0e68d8;
+}
+a:hover {
+  color: #2177df;
 }
