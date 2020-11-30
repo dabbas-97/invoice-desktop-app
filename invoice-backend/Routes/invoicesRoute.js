@@ -23,7 +23,6 @@ router.get("/count", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const addedInvoice = await addInvoice(req.body);
-    console.log(req.body);
     res.send(addedInvoice);
   } catch (e) {
     res.send(e.message);
@@ -33,10 +32,8 @@ router.post("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const invoice = await getOneInvoice(req.params.id);
-    console.log(invoice);
     res.send(invoice);
   } catch (e) {
-    console.log(e);
     res.send(e.message);
   }
 });

@@ -40,11 +40,11 @@ const ReceiptForm = ({ cancel, proceed }) => {
       dispatch(
         setReceipt({
           ...receipt,
-          cheque: { ...receipt.cheque, [input]: e.target.value.trim() },
+          cheque: { ...receipt.cheque, [input]: e.target.value },
         })
       );
     } else {
-      dispatch(setReceipt({ ...receipt, [input]: e.target.value.trim() }));
+      dispatch(setReceipt({ ...receipt, [input]: e.target.value }));
     }
   };
   const handleReceiptCheck = (input) => (e) => {

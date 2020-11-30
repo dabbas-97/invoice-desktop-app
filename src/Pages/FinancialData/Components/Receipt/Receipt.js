@@ -41,7 +41,7 @@ export default function Receipt() {
     if (!receipt._id) {
       dispatch(startLoading());
       Axios.get(link + "/receipt/count").then(({ data }) => {
-        dispatch(setReceipt({ ...receipt, receiptNumber: data.count }));
+        dispatch(setReceipt({ ...receipt, receiptNumber: data.count + 1 }));
         dispatch(stopLoading());
       });
     }

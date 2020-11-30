@@ -24,7 +24,7 @@ export default function ContractForm({ cancel, proceed }) {
   };
 
   const handleContract = (input) => (e) => {
-    dispatch(setContract({ ...contract, [input]: e.target.value.trim() }));
+    dispatch(setContract({ ...contract, [input]: e.target.value }));
   };
 
   return (

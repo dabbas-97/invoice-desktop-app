@@ -19,13 +19,10 @@ export default function CompanyForm({ cancel, proceed }) {
   const companyInfo = useSelector(selectCompanyInfo);
 
   const handleCompanyInfo = (input) => (e) => {
-    dispatch(
-      setCompanyInfo({ ...companyInfo, [input]: e.target.value.trim() })
-    );
+    dispatch(setCompanyInfo({ ...companyInfo, [input]: e.target.value }));
   };
 
   const addCompany = (e) => {
-    console.log("submitted!!");
     e.preventDefault();
     proceed();
   };

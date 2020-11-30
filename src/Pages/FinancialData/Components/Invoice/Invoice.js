@@ -41,7 +41,7 @@ export default function Invoice() {
     if (!invoice._id) {
       dispatch(startLoading());
       Axios.get(link + "/invoice/count").then(({ data }) => {
-        dispatch(setInvoice({ ...invoice, invoiceNumber: data.count }));
+        dispatch(setInvoice({ ...invoice, invoiceNumber: data.count + 1 }));
         dispatch(stopLoading());
       });
     }

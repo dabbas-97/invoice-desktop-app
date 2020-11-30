@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const addedCompany = await addCompany(req.body.company);
+    const addedCompany = await addCompany(req.body);
     res.send(addedCompany);
   } catch (e) {
     res.send(e.message);

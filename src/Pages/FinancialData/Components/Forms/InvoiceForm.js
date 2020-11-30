@@ -36,7 +36,7 @@ const InvoiceForm = ({ cancel, proceed }) => {
   };
 
   const handleInvoice = (input) => (e) => {
-    dispatch(setInvoice({ ...invoice, [input]: e.target.value.trim() }));
+    dispatch(setInvoice({ ...invoice, [input]: e.target.value }));
   };
   const handleInvoiceCheck = (input) => (e) => {
     dispatch(setInvoice({ ...invoice, [input]: e.target.checked }));
