@@ -26,6 +26,7 @@ function createWindow() {
       protocol: "file:",
       slashes: true,
     });
+  console.log(startUrl);
   mainWindow.loadURL(startUrl);
 
   mainWindow.on("closed", () => {

@@ -29,32 +29,37 @@ app.use("/company/", companiesRoute);
 app.use("/receipt/", receiptsRoute);
 app.use("/contract/", contractsRoute);
 
-app.post("/compress", upload.single("image"), async (req, res) => {
-  const image = sharp(req.file.buffer);
-  const metadata = await image.metadata();
-  if (metadata.width > metadata.height) {
-    const resizedImage = await image
-      .resize(700, 450, { fit: "cover" })
-      .blur(0.3)
-      .toFormat("jpg")
-      .toBuffer();
-    res.send(resizedImage.toString("base64"));
-  } else {
-    const resizedImage = await image
-      .resize(null, 450, { fit: "cover" })
-      .blur(0.3)
-      .toBuffer();
+app.post("/compress", upload.array("image"), async (req, res) => {
+  const resizedImages = await Promise.all(
+    req.files.map(async (file) => {
+      const image = sharp(file.buffer);
+      const metadata = await image.metadata();
+      if (metadata.width > metadata.height) {
+        const resizedImage = await image
+          .resize(700, 450, { fit: "cover" })
+          .blur(0.3)
+          .toFormat("jpg")
+          .toBuffer();
+        return resizedImage.toString("base64");
+      } else {
+        const resizedImage = await image
+          .resize(null, 450, { fit: "cover" })
+          .blur(0.3)
+          .toBuffer();
 
-    const stretchedImage = await sharp(resizedImage)
-      .resize(700, 450, { fit: "fill" })
-      .blur(30)
-      .toBuffer();
+        const stretchedImage = await sharp(resizedImage)
+          .resize(700, 450, { fit: "fill" })
+          .blur(30)
+          .toBuffer();
 
-    const combinedImage = await sharp(stretchedImage)
-      .composite([{ input: resizedImage }])
-      .toBuffer();
-    res.send(combinedImage.toString("base64"));
-  }
+        const combinedImage = await sharp(stretchedImage)
+          .composite([{ input: resizedImage }])
+          .toBuffer();
+        return combinedImage.toString("base64");
+      }
+    })
+  );
+  res.send(resizedImages);
 });
 
 const PORT = 5000;
