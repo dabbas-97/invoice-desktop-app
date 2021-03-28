@@ -7,6 +7,13 @@ const initState = {
   amountLetters: "",
   creationDate: new Date().toString(),
   includeTax: false,
+  name: "",
+  location: "",
+  phoneNumber: "",
+  concernedPerson: "",
+  email: "",
+  description: "",
+  duration: "",
 };
 export const slice = createSlice({
   name: "invoice",

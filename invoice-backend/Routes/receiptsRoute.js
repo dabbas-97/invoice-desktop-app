@@ -8,12 +8,22 @@ const {
   editReceipt,
   getOneReceipt,
   addReceipt,
-  getReceiptsCount,
+  countReceipts,
+  getAllReceipts,
 } = controller;
+
+router.get("/", async (req, res, next) => {
+  try {
+    const receipts = await getAllReceipts();
+    res.send(receipts);
+  } catch (e) {
+    res.send(e.message);
+  }
+});
 
 router.get("/count", async (req, res, next) => {
   try {
-    const count = await getReceiptsCount();
+    const count = await countReceipts();
     res.send({ count });
   } catch (e) {
     res.send(e.message);

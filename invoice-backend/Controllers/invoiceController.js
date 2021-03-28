@@ -1,21 +1,20 @@
+const { uid } = require("uid");
 const db = require("../database/database");
 
-const getInvoicesCount = () => {
+const addInvoice = (invoiceData) => {
   return new Promise(function (resolve, reject) {
-    db.invoicesCount.count({ step: "" }, (err, count) => {
-      if (err) reject(err);
-
-      resolve(count);
+    db.invoices.insert({ ...invoiceData, _id: uid(16) }, (err, invoice) => {
+      if (err) return reject(err);
+      resolve(invoice);
     });
   });
 };
 
-const addInvoice = (invoiceData) => {
+const getAllInvoices = () => {
   return new Promise(function (resolve, reject) {
-    db.invoices.insert(invoiceData, (err, invoice) => {
-      if (err) return reject(err);
-      db.invoicesCount.insert({ step: "" });
-      resolve(invoice);
+    db.invoices.find({}, (err, invoices) => {
+      if (err) reject(err);
+      resolve(invoices);
     });
   });
 };
@@ -44,12 +43,14 @@ const editInvoice = (invoiceId, newInfo) => {
 };
 
 const deleteInvoice = (invoiceId) => {
+  db.invoices.remove({ _id: invoiceId });
+};
+
+const countInvoices = () => {
   return new Promise(function (resolve, reject) {
-    db.invoices.remove({ _id: invoiceId }, (err) => {
+    db.receipts.count({}, (err, invoicesCount) => {
       if (err) reject(err);
-      resolve({
-        message: `invoice with the id : ${invoiceId} has been deleted `,
-      });
+      resolve(invoicesCount);
     });
   });
 };
@@ -58,6 +59,7 @@ module.exports = {
   deleteInvoice,
   editInvoice,
   getOneInvoice,
+  getAllInvoices,
   addInvoice,
-  getInvoicesCount,
+  countInvoices,
 };

@@ -8,12 +8,22 @@ const {
   editInvoice,
   getOneInvoice,
   addInvoice,
-  getInvoicesCount,
+  countInvoices,
+  getAllInvoices,
 } = controller;
+
+router.get("/", async (req, res, next) => {
+  try {
+    const invoices = await getAllInvoices();
+    res.send(invoices);
+  } catch (e) {
+    res.send(e.message);
+  }
+});
 
 router.get("/count", async (req, res, next) => {
   try {
-    const count = await getInvoicesCount();
+    const count = await countInvoices();
     res.send({ count });
   } catch (e) {
     res.send(e.message);

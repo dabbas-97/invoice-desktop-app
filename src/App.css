@@ -1,10 +1,20 @@
 *,
 label {
   font-family: "Cairo", sans-serif !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   background: #ececec;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
 }
 .spinner {
   display: block !important;
@@ -182,7 +192,7 @@ body {
   margin: 10px 0;
 }
 .MuiFormControl-root {
-  width: 100%;
+  margin: 11px 0 !important;
 }
 .MuiOutlinedInput-inputMarginDense {
   padding-top: 15.5px !important;
@@ -247,6 +257,11 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+}
+.no-companies:hover {
+  background: #ebebeb;
 }
 .no-companies h3 span {
   color: #0e68d8;

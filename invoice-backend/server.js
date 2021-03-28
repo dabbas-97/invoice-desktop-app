@@ -9,9 +9,8 @@ const upload = multer({ storage });
 
 //* Routes
 const invoicesRoute = require("./Routes/invoicesRoute");
-const companiesRoute = require("./Routes/companiesRoute");
+
 const receiptsRoute = require("./Routes/receiptsRoute");
-const contractsRoute = require("./Routes/contractsRoute");
 
 app.use(express.json());
 app.use(cors());
@@ -25,9 +24,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/invoice/", invoicesRoute);
-app.use("/company/", companiesRoute);
 app.use("/receipt/", receiptsRoute);
-app.use("/contract/", contractsRoute);
 
 app.post("/compress", upload.array("image"), async (req, res) => {
   const resizedImages = await Promise.all(
@@ -62,6 +59,7 @@ app.post("/compress", upload.array("image"), async (req, res) => {
   res.send(resizedImages);
 });
 
+console.log(process.env.ELECTRON_START_URL);
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

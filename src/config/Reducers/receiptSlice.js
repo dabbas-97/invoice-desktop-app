@@ -6,6 +6,13 @@ const initState = {
   amount: 0,
   amountLetters: "",
   creationDate: new Date().toString(),
+  name: "",
+  location: "",
+  phoneNumber: "",
+  concernedPerson: "",
+  email: "",
+  description: "",
+  duration: "",
   isCheque: false,
   cheque: {
     chequeNumber: "",

@@ -1,25 +1,23 @@
+const { uid } = require("uid");
 const db = require("../database/database");
-
-const getReceiptsCount = () => {
-  return new Promise(function (resolve, reject) {
-    db.receiptsCount.count({ step: "" }, (err, count) => {
-      if (err) reject(err);
-
-      resolve(count);
-    });
-  });
-};
 
 const addReceipt = (receiptData) => {
   return new Promise(function (resolve, reject) {
-    db.receipts.insert(receiptData, (err, receipt) => {
+    db.receipts.insert({ ...receiptData, _id: uid(16) }, (err, receipt) => {
       if (err) return reject(err);
-      db.receiptsCount.insert({ step: "" });
       resolve(receipt);
     });
   });
 };
 
+const getAllReceipts = () => {
+  return new Promise(function (resolve, reject) {
+    db.receipts.find({}, (err, receipts) => {
+      if (err) reject(err);
+      resolve(receipts);
+    });
+  });
+};
 const getOneReceipt = (receiptId) => {
   return new Promise(function (resolve, reject) {
     db.receipts.findOne({ _id: receiptId }, (err, receipt) => {
@@ -44,12 +42,13 @@ const editReceipt = (receiptId, newInfo) => {
 };
 
 const deleteReceipt = (receiptId) => {
+  db.receipts.remove({ _id: receiptId });
+};
+const countReceipts = () => {
   return new Promise(function (resolve, reject) {
-    db.receipts.remove({ _id: receiptId }, (err) => {
+    db.receipts.count({}, (err, receiptsCount) => {
       if (err) reject(err);
-      resolve({
-        message: `receipt with the id : ${receiptId} has been deleted `,
-      });
+      resolve(receiptsCount);
     });
   });
 };
@@ -58,6 +57,7 @@ module.exports = {
   deleteReceipt,
   editReceipt,
   getOneReceipt,
+  getAllReceipts,
   addReceipt,
-  getReceiptsCount,
+  countReceipts,
 };

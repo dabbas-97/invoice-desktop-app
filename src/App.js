@@ -12,13 +12,13 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 // Components
 import Nav from "./Pages/NavBar/Nav";
 import Statistics from "./Pages/Statistics/Statistics";
-import FinancialData from "./Pages/FinancialData/FinancialData";
 import CompressImage from "./Pages/CompressImage/CompressImage";
 import Rtl from "./config/Rtl";
 // End of Components
 
-import axios from "axios";
 import { ProceedDialog } from "./Pages/Dialog/ProceedDialog";
+import InvoicesData from "./Pages/FinancialData/InvoicesData";
+import ReceiptsData from "./Pages/FinancialData/ReceiptsData";
 
 const App = () => {
   const theme = createMuiTheme({
@@ -30,8 +30,10 @@ const App = () => {
   const renderPages = () => {
     switch (tab) {
       case 1:
-        return <FinancialData />;
+        return <InvoicesData />;
       case 2:
+        return <ReceiptsData />;
+      case 3:
         return <CompressImage />;
       default:
         return <Statistics />;
@@ -42,10 +44,10 @@ const App = () => {
   return (
     <Rtl>
       <ThemeProvider theme={theme}>
-        <Container maxWidth={false}>
+        <div className="app">
           <Nav />
           {renderPages()}
-        </Container>
+        </div>
         <ProceedDialog />
       </ThemeProvider>
     </Rtl>

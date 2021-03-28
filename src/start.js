@@ -1,4 +1,6 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+
+require("dotenv").config();
 
 const path = require("path");
 const url = require("url");
@@ -26,7 +28,6 @@ function createWindow() {
       protocol: "file:",
       slashes: true,
     });
-  console.log(startUrl);
   mainWindow.loadURL(startUrl);
 
   mainWindow.on("closed", () => {
@@ -45,6 +46,7 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
 function handleSquirrelEvent(application) {
   if (process.argv.length === 1) {
     return false;

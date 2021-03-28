@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const slice = createSlice({
-  name: "companies",
+  name: "invoices",
   initialState: {
     data: [],
   },
   reducers: {
-    setCompanies: (state, action) => {
+    setInvoices: (state, action) => {
       state.data = action.payload;
     },
   },
 });
 
-export const { setCompanies } = slice.actions;
+export const { setInvoices } = slice.actions;
 
-export const selectCompanies = (state) => state.companies.data;
+export const selectInvoices = (state) => state.invoices.data;
 
 export default slice.reducer;

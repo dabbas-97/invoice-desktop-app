@@ -11,14 +11,12 @@ import {
   stopLoading,
   startLoading,
 } from "../../../../config/Reducers/loadingSlice";
-import { selectCompanyInfo } from "../../../../config/Reducers/companyInfoSlice";
-import { selectContractInfo } from "../../../../config/Reducers/contractSlice";
 import {
   clearReceipt,
   selectReceipt,
   setReceipt,
 } from "../../../../config/Reducers/receiptSlice";
-import { changeView } from "../../../../config/Reducers/financialDataViewSlice";
+import { changeReceiptsDataView } from "../../../../config/Reducers/financialDataViewSlice";
 import {
   openDialog,
   selectDialogIsOpen,
@@ -28,13 +26,10 @@ import {
 import { selectLink } from "../../../../config/Reducers/authSlice";
 import Axios from "axios";
 
-export default function Receipt() {
-  const [editMode, setEditMode] = useState(false);
+export default function Receipt({ editMode, editOn, editOff }) {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const receipt = useSelector(selectReceipt);
-  const company = useSelector(selectCompanyInfo);
-  const contract = useSelector(selectContractInfo);
   const link = useSelector(selectLink);
 
   useEffect(() => {
@@ -48,9 +43,9 @@ export default function Receipt() {
   }, []);
 
   const cancel = () => {
-    dispatch(changeView(0));
+    dispatch(changeReceiptsDataView(0));
     dispatch(clearReceipt());
-    setEditMode(false);
+    editOff();
   };
   const proceed = () => {
     dispatch(
@@ -62,23 +57,20 @@ export default function Receipt() {
     );
   };
 
-  const edit = () => {
-    setEditMode(true);
-  };
   const close = () => {
     dispatch(closeDialog());
-    dispatch(changeView(0));
-    setEditMode(false);
+    dispatch(changeReceiptsDataView(0));
+    editOff();
   };
 
   const submit = () => {
     if (editMode) {
-      Axios.patch(link + "/receipt/" + company._id, receipt).then(() =>
+      Axios.patch(link + "/receipt/" + receipt._id, receipt).then(() =>
         close()
       );
     } else {
-      console.log(company._id);
-      Axios.post(link + "/receipt", { ...receipt, _id: company._id }).then(
+      console.log(receipt._id);
+      Axios.post(link + "/receipt", { ...receipt, _id: receipt._id }).then(
         () => {
           close();
         }
@@ -96,13 +88,7 @@ export default function Receipt() {
   const renderReceipt = () => {
     if (receipt._id && !editMode) {
       return (
-        <ReceiptTemplate
-          company={company}
-          receipt={receipt}
-          contract={contract}
-          back={cancel}
-          edit={edit}
-        />
+        <ReceiptTemplate receipt={receipt} back={cancel} editOn={editOn} />
       );
     } else {
       return <ReceiptForm cancel={cancel} proceed={proceed} />;

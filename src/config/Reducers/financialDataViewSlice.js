@@ -3,17 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 export const slice = createSlice({
   name: "financialDataView",
   initialState: {
-    value: 0,
+    invoiceData: 0,
+    receiptData: 0,
   },
   reducers: {
-    changeView: (state, action) => {
-      state.value = action.payload;
+    changeInvoicesDataView: (state, action) => {
+      state.invoiceData = action.payload;
+    },
+    changeReceiptsDataView: (state, action) => {
+      state.receiptData = action.payload;
     },
   },
 });
 
-export const { changeView } = slice.actions;
+export const { changeInvoicesDataView, changeReceiptsDataView } = slice.actions;
 
-export const selectFinancialDataView = (state) => state.financialDataView.value;
+export const selectInvoicesDataView = (state) =>
+  state.financialDataView.invoiceData;
+export const selectReceiptsDataView = (state) =>
+  state.financialDataView.receiptData;
 
 export default slice.reducer;

@@ -11,14 +11,12 @@ import {
   startLoading,
   stopLoading,
 } from "../../../../config/Reducers/loadingSlice";
-import { selectCompanyInfo } from "../../../../config/Reducers/companyInfoSlice";
-import { selectContractInfo } from "../../../../config/Reducers/contractSlice";
 import {
   clearInvoice,
   selectInvoice,
   setInvoice,
 } from "../../../../config/Reducers/invoiceSlice";
-import { changeView } from "../../../../config/Reducers/financialDataViewSlice";
+import { changeInvoicesDataView } from "../../../../config/Reducers/financialDataViewSlice";
 import {
   openDialog,
   selectDialogIsOpen,
@@ -29,13 +27,10 @@ import { selectLink } from "../../../../config/Reducers/authSlice";
 
 import Axios from "axios";
 
-export default function Invoice() {
-  const [editMode, setEditMode] = useState(false);
+export default function Invoice({ editMode, editOn, editOff }) {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const invoice = useSelector(selectInvoice);
-  const company = useSelector(selectCompanyInfo);
-  const contract = useSelector(selectContractInfo);
   const link = useSelector(selectLink);
   useEffect(() => {
     if (!invoice._id) {
@@ -48,9 +43,9 @@ export default function Invoice() {
   }, []);
 
   const cancel = () => {
-    dispatch(changeView(0));
+    dispatch(changeInvoicesDataView(0));
     dispatch(clearInvoice());
-    setEditMode(false);
+    editOff();
   };
   const proceed = () => {
     dispatch(
@@ -62,23 +57,19 @@ export default function Invoice() {
     );
   };
 
-  const edit = () => {
-    setEditMode(true);
-  };
-
   const close = () => {
     dispatch(closeDialog());
-    dispatch(changeView(0));
-    setEditMode(false);
+    dispatch(changeInvoicesDataView(0));
+    editOff();
   };
   const submit = () => {
     if (editMode) {
-      Axios.patch(link + "/invoice/" + company._id, invoice).then(() =>
+      Axios.patch(link + "/invoice/" + invoice._id, invoice).then(() =>
         close()
       );
     } else {
-      console.log(company._id);
-      Axios.post(link + "/invoice", { ...invoice, _id: company._id }).then(
+      console.log(invoice._id);
+      Axios.post(link + "/invoice", { ...invoice, _id: invoice._id }).then(
         () => {
           close();
         }
@@ -96,13 +87,7 @@ export default function Invoice() {
   const renderInvoice = () => {
     if (invoice._id && !editMode) {
       return (
-        <InvoiceTemplate
-          invoice={invoice}
-          contract={contract}
-          company={company}
-          back={cancel}
-          edit={edit}
-        />
+        <InvoiceTemplate invoice={invoice} back={cancel} editOn={editOn} />
       );
     } else {
       return <InvoiceForm cancel={cancel} proceed={proceed} />;

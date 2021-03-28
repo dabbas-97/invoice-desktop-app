@@ -3,7 +3,7 @@ import React from "react";
 
 export const ViewTitles = () => {
   return (
-    <Grid container className='invoices_title'>
+    <Grid container className="invoices_title">
       <Grid item xs={2}>
         الرقم
       </Grid>
@@ -14,13 +14,13 @@ export const ViewTitles = () => {
         العقد
       </Grid>
       <Grid item xs={2}>
-        الفاتورة
-      </Grid>
-      <Grid item xs={2}>
-        سند القبض
+        القيمة
       </Grid>
       <Grid item xs={1}>
-        مسح
+        طباعة
+      </Grid>
+      <Grid item xs={2}>
+        تعديل
       </Grid>
     </Grid>
   );
