@@ -78,16 +78,22 @@ export const ViewInfo = ({ item, index, editOn }) => {
     }
   };
 
+  const renderNumber = () => {
+    let number = item.invoiceNumber ? item.invoiceNumber : item.receiptNumber;
+    const stringNum = String(number);
+    const length = 7 - stringNum.length;
+    return new Array(length).fill(0).concat(stringNum);
+  };
   return (
     <Grid container className="invoices_data">
-      <Grid item xs={2}>
+      <Grid item xs={1}>
         {index + 1}
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         {item.name}
       </Grid>
       <Grid item xs={2}>
-        {item.description}
+        {renderNumber()}
       </Grid>
       <Grid item xs={2}>
         JOD {item.amount}

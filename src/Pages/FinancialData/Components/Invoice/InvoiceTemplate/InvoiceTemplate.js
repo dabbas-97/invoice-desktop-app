@@ -30,7 +30,13 @@ const InvoiceTemplate = ({ invoice, back, editOn }) => {
               <div>مــــــــوقع رؤيـــــــــا نيــــــوز</div>
 
               <div>شركة صدق الرؤيا الاقتصادي</div>
-              <div className="roya-link">www.royanews.com</div>
+              <a
+                className="roya-link"
+                href="https://www.royanews.com"
+                target="_blank"
+              >
+                www.royanews.com
+              </a>
             </Grid>
           </Grid>
 

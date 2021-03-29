@@ -32,7 +32,13 @@ const ReceiptTemplate = ({ receipt, back, editOn }) => {
               <div>مــــــــوقع رؤيـــــــــا نيــــــوز</div>
 
               <div>شركة صدق الرؤيا الاقتصادي</div>
-              <div className="roya-link">www.royanews.com</div>
+              <a
+                className="roya-link"
+                href="https://www.royanews.com"
+                target="_blank"
+              >
+                www.royanews.com
+              </a>
             </Grid>
           </Grid>
 
@@ -60,11 +66,11 @@ const ReceiptTemplate = ({ receipt, back, editOn }) => {
             <Grid item xs={4}></Grid>
           </Grid>
 
-          <Grid container spacing={6} className="invoice-info">
+          <Grid container className="invoice-info">
             <Grid item xs={4}>
               <Grid container>
                 <Grid item xs={6}>
-                  الـــــــرقم:
+                  الـرقــــــــــــــم:
                 </Grid>
                 <Grid item xs={6}>
                   {renderNumber()}
@@ -84,6 +90,7 @@ const ReceiptTemplate = ({ receipt, back, editOn }) => {
             </Grid>
             <Grid item xs={4}>
               <div>
+                التاريخ :
                 <Moment format="YYYY/MM/DD">{receipt.creationDate}</Moment>
               </div>
             </Grid>

@@ -48,7 +48,7 @@ const deleteInvoice = (invoiceId) => {
 
 const countInvoices = () => {
   return new Promise(function (resolve, reject) {
-    db.receipts.count({}, (err, invoicesCount) => {
+    db.invoices.count({}, (err, invoicesCount) => {
       if (err) reject(err);
       resolve(invoicesCount);
     });
