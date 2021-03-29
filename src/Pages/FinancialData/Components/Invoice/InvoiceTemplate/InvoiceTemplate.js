@@ -40,7 +40,6 @@ const InvoiceTemplate = ({ invoice, back, editOn }) => {
             </Grid>
           </Grid>
 
-          <h3>فـــاتـــورة</h3>
           <div className="invoice-info">
             <Grid container>
               <Grid item xs={4} className="align-right">
@@ -72,6 +71,7 @@ const InvoiceTemplate = ({ invoice, back, editOn }) => {
               </Grid>
             </Grid>
           </div>
+          <h3>فـــاتـــورة</h3>
           <div className="main-info">
             <Grid container className="big-info">
               <Grid item xs={4}>

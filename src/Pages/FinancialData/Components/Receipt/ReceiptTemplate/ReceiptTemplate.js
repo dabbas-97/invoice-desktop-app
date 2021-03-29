@@ -42,30 +42,6 @@ const ReceiptTemplate = ({ receipt, back, editOn }) => {
             </Grid>
           </Grid>
 
-          <h3>سند قبــض</h3>
-          <Grid container>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
-              <div className="center">
-                <span className="inline-block">فلس</span>
-                <span className="inline-block">دينار</span>
-              </div>
-            </Grid>
-            <Grid item xs={4}></Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
-              <div className="center">
-                <span className="inline-block receipt-amount">{"000"}</span>
-                <span className="inline-block receipt-amount">
-                  {receipt.amount}
-                </span>
-              </div>
-            </Grid>
-            <Grid item xs={4}></Grid>
-          </Grid>
-
           <Grid container className="invoice-info">
             <Grid item xs={4}>
               <Grid container>
@@ -94,6 +70,29 @@ const ReceiptTemplate = ({ receipt, back, editOn }) => {
                 <Moment format="YYYY/MM/DD">{receipt.creationDate}</Moment>
               </div>
             </Grid>
+          </Grid>
+          <h3>سند قبــض</h3>
+          <Grid container>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+              <div className="center">
+                <span className="inline-block">فلس</span>
+                <span className="inline-block">دينار</span>
+              </div>
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+              <div className="center">
+                <span className="inline-block receipt-amount">{"000"}</span>
+                <span className="inline-block receipt-amount">
+                  {receipt.amount}
+                </span>
+              </div>
+            </Grid>
+            <Grid item xs={4}></Grid>
           </Grid>
           <div className="main-info">
             <Grid container className="big-info">
