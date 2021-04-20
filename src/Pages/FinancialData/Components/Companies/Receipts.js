@@ -38,7 +38,7 @@ export default function Receipts({ editOn }) {
     if (!dataFetched) {
       dispatch(startLoading);
       Axios.get(link + "/receipt").then(async ({ data }) => {
-        await dispatch(setReceipts([...data]));
+        await dispatch(setReceipts([...data].sort((a, b) =>a.receiptNumber - b.receiptNumber))); 
         setDataFetched(true);
         dispatch(stopLoading);
       });

@@ -24,7 +24,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
     "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
     "fontsource-roboto": "^3.0.3",
@@ -87,7 +87,7 @@
     "electron-rebuild": "^2.3.2",
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^4.0.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "^4.0.3"
   },
   "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
 }

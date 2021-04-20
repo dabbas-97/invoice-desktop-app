@@ -59,7 +59,6 @@ app.post("/compress", upload.array("image"), async (req, res) => {
   res.send(resizedImages);
 });
 
-console.log(process.env.ELECTRON_START_URL);
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

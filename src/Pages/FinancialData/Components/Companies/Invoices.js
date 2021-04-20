@@ -38,7 +38,7 @@ export default function Invoices({ editOn }) {
     if (!dataFetched) {
       dispatch(startLoading);
       Axios.get(link + "/invoice").then(async ({ data }) => {
-        await dispatch(setInvoices([...data]));
+        await dispatch(setInvoices([...data].sort((a, b) =>a.invoiceNumber - b.invoiceNumber)));
         setDataFetched(true);
         dispatch(stopLoading);
       });
